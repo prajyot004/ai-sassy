@@ -1,4 +1,4 @@
-"use client"; // Ensure this runs client-side only
+"use client"; // Ensures this is client-side code
 
 import axios from "axios";
 import * as z from "zod";
@@ -16,6 +16,7 @@ import { useProModal } from "@/hooks/use-pro-model";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 
+// Define the form validation schema using Zod
 const formSchema = z.object({
   sender: z.string().nonempty("Sender is required"),
   receiver: z.string().nonempty("Receiver is required"),
@@ -28,6 +29,7 @@ const formSchema = z.object({
   }),
 });
 
+// Type for form values based on the schema
 type FormValues = z.infer<typeof formSchema>;
 
 interface ConversionPageProps {
@@ -38,6 +40,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
   const proModal = useProModal();
   const router = useRouter();
 
+  // Initialize form using react-hook-form and Zod resolver for validation
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,14 +55,16 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
   const [emailContent, setEmailContent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // Helper function to simulate delay
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+  // Handle form submission
   const onSubmit = useCallback<SubmitHandler<FormValues>>(async (values) => {
     setIsLoading(true);
     setEmailContent(null);
 
     try {
-      await delay(2000);
+      await delay(2000); // Simulate delay
 
       const response = await axios.post("/api/conversation", {
         messages: [
@@ -71,9 +76,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       if (response.data.choices[0]?.message?.content && userSubscription !== null) {
         const reduceCountResponse = await axios.post("/api/reduce");
 
-        if (reduceCountResponse.data.status) {
-          console.log("API count reduced successfully");
-        } else {
+        if (!reduceCountResponse.data.status) {
           console.error("Failed to reduce API count");
         }
       }
@@ -81,7 +84,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       const generatedContent = response.data.choices[0]?.message?.content || "No content received from API";
       setEmailContent(generatedContent);
 
-      // Ensure localStorage is used only in the browser
+      // Ensure localStorage is only accessed in the browser
       if (typeof window !== 'undefined') {
         const emailHistory = JSON.parse(localStorage.getItem('emailHistory') || '[]');
         const newEmail = {
@@ -107,7 +110,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
     }
   }, [userSubscription, proModal, router]);
 
-  // Load form data from sessionStorage on component mount (browser only)
+  // Load saved form data from sessionStorage on component mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedFormData = sessionStorage.getItem('formData');
@@ -137,7 +140,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
         />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Form Fields */}
+            {/* Sender Input */}
             <FormField
               name="sender"
               control={form.control}
@@ -154,7 +157,88 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
                 </FormItem>
               )}
             />
-            {/* Other form fields */}
+
+            {/* Receiver Input */}
+            <FormField
+              name="receiver"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                      disabled={isLoading}
+                      placeholder="Receiver's Email"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {/* Content Textarea */}
+            <FormField
+              name="content"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <textarea
+                      className="text-lg border border-gray-300 bg-white text-black rounded-3xl shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                      disabled={isLoading}
+                      placeholder="Write your message here"
+                      {...field}
+                      style={{ height: '150px', resize: 'none' }}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {/* Tone Selector */}
+            <FormField
+              name="tone"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <select
+                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                      disabled={isLoading}
+                      {...field}
+                    >
+                      <option value="Formal">Formal</option>
+                      <option value="Informal">Informal</option>
+                      <option value="Professional">Professional</option>
+                      <option value="Casual">Casual</option>
+                    </select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {/* Length Selector */}
+            <FormField
+              name="length"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <select
+                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                      disabled={isLoading}
+                      {...field}
+                    >
+                      <option value="Short">Short</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Long">Long</option>
+                    </select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {/* Submit Button */}
             <Button
               className="w-full py-3 text-lg bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors"
               type="submit"
@@ -165,7 +249,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
           </form>
         </Form>
 
-        {/* Conditionally render email content */}
+        {/* Loading state or email content display */}
         {isLoading ? (
           <div className="mt-6 p-6 flex justify-center items-center">
             <Loader2 className="animate-spin text-black w-12 h-12" />
