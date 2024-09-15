@@ -1,0 +1,448 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+
+:root { 
+  height: 100%;
+}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 248 90% 66%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Add to your global CSS file or a relevant CSS module */
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* styles/animated-gradient.css */
+
+/* styles/animated-gradient.css */
+
+/* styles/animated-gradient.css */
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.bg-gradient-animated {
+  background: linear-gradient(45deg, #ff7e5f, #feb47b, #00c6ff, #0072ff);
+  background-size: 400% 400%;
+  animation: gradient-flow 20s ease infinite;
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-y {
+  0% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 15s ease infinite;
+}
+
+.animate-gradient-y {
+  background-size: 200% 200%;
+  animation: gradient-y 15s ease infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #8b5cf6, #000);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+}
+
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #9b4dff, #000, #9b4dff); /* Adjusted purple to #9b4dff */
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  animation: gradientFlow 12s ease;
+}
+
+.gradient-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ff0081, #7928ca, #ff8a00);
+  border-radius: 0.75rem; /* Match the form's border radius */
+  z-index: -1;
+  filter: blur(8px);
+  transform: scale(1.1);
+}
+
+.gradient-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: linear-gradient(45deg, #ff0081, #7928ca, #ff8a00);
+  border-radius: 1.5rem; /* Match the form's border radius */
+  z-index: -1;
+  filter: blur(12px);
+  transform: scale(1.1);
+}
+
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+.gradient-border-wrapper {
+  position: relative;
+  padding: 8px;
+  border-radius: 10px; /* Adjust based on your form's border radius */
+  background: linear-gradient(to right, #ff007f, #ff7f00, #00bfff); 
+  background-size: 150% 150%; /* Adjust the size of the gradient for smoother animation */
+  /* Gradient colors: pink, purple, blue */
+  animation: gradientMove 10s ease infinite; /* Apply the animation */
+  background-clip: padding-box;
+}
+
+.gradient-border-wrapper .gradient-halo {
+  position: relative;
+  background: #000; /* Black background for the form */
+  border-radius: 10px;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(45deg, rgba(128, 0, 128, 0.5), rgba(255, 0, 255, 0.5));
+  background-size: 300% 300%;
+  animation: gradient 4s linear infinite;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Keyframes for the gradient border animation */
+@keyframes gradientAnimation {
+  0% {
+    border-image: linear-gradient(45deg, #7b3f8c, #1e90ff, #ff69b4);
+  }
+  50% {
+    border-image: linear-gradient(45deg, #ff69b4, #7b3f8c, #1e90ff);
+  }
+  100% {
+    border-image: linear-gradient(45deg, #1e90ff, #ff69b4, #7b3f8c);
+  }
+}
+
+/* Gradient border animation class */
+.border-gradient-animation {
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(45deg, #7b3f8c, #1e90ff, #ff69b4);
+  border-image-slice: 1;
+  animation: gradientAnimation 3s linear infinite;
+}
+
+@keyframes gradientBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+.pricing-plan-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 2px; /* Adjust border thickness */
+  background: linear-gradient(45deg, #f06, transparent, #f06);
+  background-size: 400% 400%;
+  animation: gradientBorder 3s linear infinite;
+  border-radius: 1.5rem; /* Match the border radius of the plan box */
+}
+
+.pricing-plan-content {
+  background-color: black;
+  border: 2px solid transparent;
+  border-radius: 1.5rem;
+  padding: 2rem; /* Adjust padding as needed */
+  width: 20rem; /* Match width of the plan box */
+}
+
+.pricing-plan-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 2px; /* Adjust border thickness */
+  background: linear-gradient(45deg, #3b82f6, #a855f7, #ec4899, #000000); /* Gradient with blue, purple, pink, and black */
+  background-size: 400% 400%;
+  animation: gradientBorder 8s ease infinite; /* Adjusted animation speed */
+  border-radius: 1.5rem; /* Match the border radius of the plan box */
+}
+
+@keyframes gradientBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.pricing-plan-content {
+  background-color: black;
+  border: 2px solid transparent;
+  border-radius: 1.5rem;
+  padding: 2rem; /* Adjust padding as needed */
+  width: 20rem; /* Match width of the plan box */
+}
+
+
+html, body {
+  overflow-x: hidden;
+} 
+
+.gradient-border {
+  border: 10px solid transparent; /* Transparent border for the gradient to be visible */
+  border-radius: 2rem; /* Large rounded corners */
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(white, white), linear-gradient(45deg, pink, rgb(209, 0, 209), blue);
+  background-size: 100% 100%, 300% 300%; /* Adjusted background size for flowing effect */
+  background-position: 0 0, 0 0;
+  animation: gradientFlow 8s linear infinite; /* Smooth animation with adjusted duration */
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  50% {
+    background-position: 100% 100%, 100% 100%;
+  }
+  100% {
+    background-position: 0 0, 0 0;
+  }
+}
+
+/* global.css */
+
+.moving-gradient {
+  background: linear-gradient(90deg, #a855f7, #ec4899, #60a5fa, #a855f7);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 30s ease-in-out infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.moving-gradient-text {
+  background: linear-gradient(to right, orange, purple);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%; /* Loop back to the start smoothly */
+  }
+}
+
+.moving-gradient-text {
+  background: linear-gradient(to right, orange, purple);
+  background-size: 200% auto; /* Allow the background to move smoothly across */
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientMove 7s ease infinite; /* Ease the transition for smooth movement */
+}
