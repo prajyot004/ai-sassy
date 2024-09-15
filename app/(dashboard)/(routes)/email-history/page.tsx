@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Ensures this is client-side code
 
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
@@ -15,10 +15,15 @@ interface EmailEntry {
 const EmailHistoryPage = () => {
   const [emailHistory, setEmailHistory] = useState<EmailEntry[]>([]);
   const [expandedEmails, setExpandedEmails] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // To track loading state
 
   useEffect(() => {
-    const storedEmails = JSON.parse(localStorage.getItem('emailHistory') || '[]') as EmailEntry[];
-    setEmailHistory(storedEmails);
+    // Ensure localStorage is used only in the browser
+    if (typeof window !== 'undefined') {
+      const storedEmails = JSON.parse(localStorage.getItem('emailHistory') || '[]') as EmailEntry[];
+      setEmailHistory(storedEmails);
+    }
+    setIsLoading(false); // Mark loading as complete
   }, []);
 
   const toggleExpand = (index: number) => {
@@ -30,8 +35,10 @@ const EmailHistoryPage = () => {
   };
 
   const clearHistory = () => {
-    localStorage.removeItem('emailHistory');
-    setEmailHistory([]);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('emailHistory');
+      setEmailHistory([]);
+    }
   };
 
   return (
@@ -52,7 +59,9 @@ const EmailHistoryPage = () => {
       </div>
 
       <div className="w-full max-w-6xl bg-gray-800 shadow-xl rounded-lg p-8">
-        {emailHistory.length > 0 ? (
+        {isLoading ? (
+          <p className="text-gray-400">Loading email history...</p>
+        ) : emailHistory.length > 0 ? (
           <ul>
             {emailHistory.slice().reverse().map((email, index) => (
               <li key={index} className="mb-4">
