@@ -80,6 +80,8 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       const generatedContent = response.data.choices[0]?.message?.content || "No content received from API";
       setEmailContent(generatedContent);
     } catch (error: any) {
+      console.error("Error occurred:", error); 
+
       if (error?.response?.status === 403) {
         proModal.onOpen();
       } else {
