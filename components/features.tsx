@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, User, Globe, FileText, Users, PenTool } from 'react-feather'; // Import Feather Icons
@@ -74,6 +74,8 @@ const Features = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const currentRef = ref.current; // Copy ref to a local variable
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -86,13 +88,13 @@ const Features = () => {
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef); // Use the locally scoped ref
       }
     };
   }, []);

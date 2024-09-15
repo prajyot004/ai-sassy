@@ -39,8 +39,8 @@ export const LandingNavbar = () => {
         <Link href="#pricing" className="text-white hover:text-gray-300 transition-colors duration-300">
           Pricing
         </Link>
-        <Link href="/terms-of-service" className="text-white hover:text-gray-300 transition-colors duration-300">
-        Terms of Service
+        <Link href="#faqs" className="text-white hover:text-gray-300 transition-colors duration-300">
+        FAQs
         </Link>
       </div>
       <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>

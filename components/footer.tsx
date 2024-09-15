@@ -23,13 +23,13 @@ export const Footer = () => {
         <div className="flex flex-col items-center space-y-4">
           {/* Links Section */}
           <div className="flex space-x-6">
-            <Link href="/privacy-policy" className="hover:text-gray-300 transition-colors duration-300">
+            <Link href="#features" className="hover:text-gray-300 transition-colors duration-300">
               Privacy Policy
             </Link>
-            <Link href="/terms-of-service" className="hover:text-gray-300 transition-colors duration-300">
+            <Link href="#pricing" className="hover:text-gray-300 transition-colors duration-300">
               Terms of Service
             </Link>
-            <Link href="/faqs" className="hover:text-gray-300 transition-colors duration-300">
+            <Link href="#FAQs" className="hover:text-gray-300 transition-colors duration-300">
               FAQs
             </Link>
           </div>
