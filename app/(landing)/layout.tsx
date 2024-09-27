@@ -6,6 +6,7 @@ import { LandingNavbar } from "@/components/landing-navbar";
 import Pricing from "@/components/pricing";
 
 const LandingPage = () => {
+  // Here wrong setting 
   return (
     <div className="w-full h-full overflow-x-hidden">
       {/* Navbar at the top */}
