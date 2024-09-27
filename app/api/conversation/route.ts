@@ -28,12 +28,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Messages are required" }, { status: 400 });
     }
     
-    const freeTrial = await checkApiLimit(); 
+    // const freeTrial = await checkApiLimit(); 
     const isPro = await checkSubscription(); 
 
-    if (!freeTrial && !isPro) { 
-      return new NextResponse("Free trial has expired.", { status: 403 });
-    } 
+    // if (!freeTrial && !isPro) { 
+    //   return new NextResponse("Free trial has expired.", { status: 403 });
+    // } 
     
     if (!isPro) { 
       await increaseApiLimit(); 
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       model: "gpt-4o-mini",
       messages: allMessages
     });
-
+    
     console.log("OpenAI response:", response);
 
     return NextResponse.json(response);
