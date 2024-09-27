@@ -26,7 +26,7 @@ export const Heading = ({
            </div>
            <div>
                <h2 className={cn("text-3xl font-bold", titleClass)}> {/* Apply titleClass here */}
-                   {title} Naveed
+                   {title} 
                </h2>
                <p className="text-sm text-muted-foreground">
                    {description}
