@@ -8,10 +8,10 @@ import Pricing from "@/components/pricing";
 const LandingPage = () => {
     return (
       <div className="h-full w-full"> 
-        <LandingNavbar />
-        <LandingHero />
-        <Features />
-        <Pricing />
+        {/* <LandingNavbar /> */}
+        {/* <LandingHero /> */}
+        {/* <Features /> */}
+        {/* <Pricing /> */}
       </div>
     );
 }

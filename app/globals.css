@@ -323,7 +323,8 @@ body,
   border: 2px solid transparent;
   border-radius: 1.5rem;
   padding: 2rem; /* Adjust padding as needed */
-  width: 20rem; /* Match width of the plan box */
+  width: 100%; /* Match width of the plan box */
+  height: 100%;
 }
 
 .pricing-plan-wrapper {
@@ -354,7 +355,8 @@ body,
   border: 2px solid transparent;
   border-radius: 1.5rem;
   padding: 2rem; /* Adjust padding as needed */
-  width: 20rem; /* Match width of the plan box */
+  width: 100%; /* Match width of the plan box */
+  height: 100%;
 }
 
 
