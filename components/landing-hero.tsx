@@ -10,7 +10,7 @@ export const LandingHero = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full   bg-black pt-20"> {/* Added padding-top */}
       <div className="absolute inset-0">
         {/* Top Triangle Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-red-500 via-orange-500 to-yellow-500" />
@@ -18,26 +18,24 @@ export const LandingHero = () => {
         <div className="absolute inset-0 bg-black" />
       </div>
 
-      <div className="relative z-10 flex items-center justify-between h-full px-12 text-white font-bold font-poppins">
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 md:px-12 text-white font-bold font-poppins">
         {/* Left Content */}
-        <div className="flex flex-col justify-center space-y-8 flex-1">
+        <div className="flex flex-col justify-center space-y-8 flex-1 text-center md:text-left">
           <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold space-y-4">
             <h1>Build AI-Powered Emails That</h1>
             <div className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
-              <div style={{ lineHeight: '1.2', paddingBottom: '0.2em' }}>
-                <TypewriterComponent
-                  options={{
-                    strings: [
-                      "Create Impact.", 
-                      "Sound Like You", 
-                      "Build Connections"
-                    ], 
-                    autoStart: true, 
-                    loop: true,
-                    cursor: '|'
-                  }}
-                />
-              </div>
+              <TypewriterComponent
+                options={{
+                  strings: [
+                    "Create Impact.", 
+                    "Sound Like You", 
+                    "Build Connections"
+                  ], 
+                  autoStart: true, 
+                  loop: true,
+                  cursor: '|'
+                }}
+              />
             </div>
           </div>
 
@@ -54,10 +52,10 @@ export const LandingHero = () => {
           </div>
         </div>
 
-        {/* Right Content */}
-        <div className="flex flex-col items-center justify-center flex-1 pl-40">
+         {/* Right Content */}
+         <div className="flex flex-col items-center justify-center flex-1 mt-10 md:mt-0 md:pl-10">
           <div className="text-2xl font-bold text-white mb-4 text-center">Next-Gen AI Email Generator</div>
-          <MiniForm className="w-full max-w-2xl" />
+          <MiniForm className="w-full max-w-md md:max-w-2xl" />
         </div>
       </div>
     </div>
