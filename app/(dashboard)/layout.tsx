@@ -4,14 +4,15 @@ import { getApiLimitCount } from "@/lib/api-limit";
 import prismadb from "@/lib/prismadb";
 import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs/server";
-
+import { redirect } from "next/navigation";
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => { 
     const apiLimitCount = await getApiLimitCount(); 
     const isPro = await checkSubscription(); 
     const { userId } = auth();
-
+  
     if (!userId) {
-        return false;
+        redirect("sign-in");
+       
     }
     const
         UserApiLimit = await prismadb.userApiLimit.findUnique({

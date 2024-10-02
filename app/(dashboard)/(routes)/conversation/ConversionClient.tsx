@@ -66,7 +66,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
           { role: "user", content: `Write a ${values.length} email with a ${values.tone} tone from ${values.sender} to ${values.receiver} with the following content: ${values.content}` },
         ],
       });
-
+   
       if (response.data.choices[0]?.message?.content && userSubscription !== null) {
         const reduceCountResponse = await axios.post("/api/reduce");
 
@@ -106,7 +106,16 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       sessionStorage.removeItem('formData');
     }
   }, [form, onSubmit]);
-
+// useEffect(()=>{
+//         let emailHistory=JSON.parse( localStorage.getItem("emailHistory"));
+//         if( Array.isArray(emailHistory) && emailHistory.length > 0){
+//           emailHistory.push(emailContent);
+//           localStorage.setItem('emailHistory',JSON.stringify(emailHistory));
+//         }else{
+//           let emailHistory=[emailContent]
+//           localStorage.setItem('emailHistory',JSON.stringify(emailHistory));
+//         }
+// },[emailContent]);
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#1E293B]">
       <div className="w-full max-w-6xl bg-white rounded-3xl p-10 space-y-8 relative border-4 border-transparent bg-clip-border gradient-border">
