@@ -4,13 +4,13 @@ import prismadb from "@/lib/prismadb";
 
 
 const page =async () => {
-
+  console.log("@23",);
   const { userId } = auth();
 
-  if (!userId) {
-    return false;
-  }
-
+    if (!userId) {
+        return false;
+    }
+    
   const
     userSubscription = await prismadb.userSubscription.findUnique({
       where: { userId },

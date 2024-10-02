@@ -5,9 +5,10 @@ import { SubscriptionButton } from "@/components/subscription-button";
 import { currentUser } from '@clerk/nextjs/server';
 
 const SettingsPage = async () => {
+
   const isPro = await checkSubscription();
   const user = await currentUser(); // Fetch user data from Clerk
-
+;
   return (
     <div className="max-w-4xl py-8 space-y-8">
       <Heading
