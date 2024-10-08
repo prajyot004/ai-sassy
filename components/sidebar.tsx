@@ -27,12 +27,12 @@ const routes = [
         href: "/conversation",
         color: "text-violet-500"
     },
-    { 
-        label: "Email History",  // New Email History Route
-        icon: History,
-        href: "/email-history",
-        color: "text-blue-500"
-    },
+    // { 
+    //     label: "Email History",  // New Email History Route
+    //     icon: History,
+    //     href: "/email-history",
+    //     color: "text-blue-500"
+    // },
     { 
         label: "Templates",  // New Templates Route
         icon: Edit3,
