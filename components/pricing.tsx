@@ -22,8 +22,8 @@ const pricingPlans = [
     frequency: "per month",
     stripePriceId: process.env.NEXT_PUBLIC_PREMIUM,
     features: [
-      "100 Emails per month!",
-      "50 GB Storage",
+      "100 Emails per month",
+      "45 GB Storage",
       "Priority Email Support",
       "Enhanced File Sharing",
       "File Version History (30 days)",
