@@ -8,20 +8,21 @@ import Pricing from "@/components/pricing";
 const LandingPage = () => {
   // Here wrong setting 
   return (
-    <div className="w-full h-full overflow-x-hidden">
+    <div id="startPage" className="  bg-black overflow-x-hidden pt-[72px]">
       {/* Navbar at the top */}
       <LandingNavbar />
 
-      {/* Landing Hero Section */}
-      <LandingHero />
+        {/* Landing Hero Section */}
+        <LandingHero />
 
-      {/* Other Sections */}
-      <Features />
-      <Pricing />
-      <FAQs />
+        {/* Other Sections */}
+        <Features />
 
-      {/* Footer at the bottom */}
-      <Footer />
+        <Pricing />
+        <FAQs />
+
+        {/* Footer at the bottom */}
+        <Footer />
     </div>
   );
 };

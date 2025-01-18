@@ -100,7 +100,7 @@ const Features = () => {
   }, []);
 
   return (
-    <div id="features" className="py-10 bg-black text-center text-white relative">
+    <div id="features" className="py-[5rem] scroll-m-[200px] bg-black text-center text-white relative">
       {/* White line above title */}
       <div className="absolute top-4 left-0 w-full h-px bg-white" style={{ left: '-100vw', width: 'calc(100vw + 2 * 100vw)' }} />
 

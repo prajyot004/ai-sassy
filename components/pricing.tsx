@@ -91,7 +91,7 @@ const handleSubscribe = async (plan: any) => {
 
 const Pricing = () => {
   return (
-    <div id="pricing" className="relative min-h-screen py-20 bg-black flex flex-col items-center px-4">
+    <div id="pricing" className="relative py-[4rem] scroll-m-[220px] bg-black flex flex-col items-center px-4">
       {/* White bar */}
       <div
         className="absolute top-0 left-0 w-full h-px bg-white"
@@ -108,7 +108,7 @@ const Pricing = () => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-sm mx-auto pricing-plan-wrapper"
+            className="bg-gray-800 rounded-lg shadow-lg px-[4em] py-[64px] w-full max-w-sm mx-auto pricing-plan-wrapper"
           >
             <div className="pricing-plan-content text-center">
               <h3 className="text-xl font-medium text-white mb-4">{plan.title}</h3>
@@ -121,6 +121,7 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
+              {index != 0 && (
               <Button
                 className="w-full"
                 variant="premium"
@@ -129,6 +130,7 @@ const Pricing = () => {
                 Upgrade
                 <Zap className="w-4 h-4 ml-2 fill-white" />
               </Button>
+              )}
             </div>
           </motion.div>
         ))}

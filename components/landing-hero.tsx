@@ -10,7 +10,7 @@ export const LandingHero = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <div className="relative w-full   bg-black pt-20"> {/* Added padding-top */}
+    <div className="relative w-full bg-black py-[4rem]"> {/* Added padding-top */}
       <div className="absolute inset-0">
         {/* Top Triangle Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-red-500 via-orange-500 to-yellow-500" />
@@ -43,13 +43,15 @@ export const LandingHero = () => {
             Next Generation Machine Learning Technology To Build Emails for You.
           </div>
           
-          <div>
-            <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
-              <Button variant="premium" className="md:text-lg py-3 px-6 md:py-4 md:px-8 rounded-full font-semibold transition-transform transform hover:scale-105">
-                Get Started for Free
-              </Button>
-            </Link>
-          </div>
+          {!isSignedIn && (
+            <div>
+              <Link href="/dashboard">
+                <Button variant="premium" className="md:text-lg py-3 px-6 md:py-4 md:px-8 rounded-full font-semibold transition-transform transform hover:scale-105">
+                  Get Started for Free
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
 
          {/* Right Content */}

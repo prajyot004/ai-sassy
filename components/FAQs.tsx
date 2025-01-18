@@ -37,7 +37,7 @@ const FAQ = () => {
   return (
     <div
       id="faqs"
-      className="py-16 bg-black text-white relative"
+      className="px-[24px] py-[4rem] scroll-m-[215px] bg-black text-white relative"
       style={{
         backgroundSize: 'cover',
         backgroundPosition: 'center',

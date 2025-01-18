@@ -3,10 +3,11 @@
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, UserButton, UserProfile } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { User } from "@clerk/nextjs/server";
 
 const font = Montserrat({
   weight: "600",
@@ -18,27 +19,42 @@ export const LandingNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <nav className="bg-black dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="#startPage" className="flex items-center space-x-3 rtl:space-x-reverse">
           <Image
-            src="https://flowbite.com/docs/images/logo.svg"
+            src="/logo.png"
             className="h-8"
             alt="Flowbite Logo"
             width={32}
             height={32}
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Flowbite
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
+            ultimail.ai
           </span>
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Get started
-          </button>
+          {isSignedIn ? (
+            <div className="flex gap-[16px]">
+              <Button
+                variant="premium"
+                className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2 transition-colors duration-300"
+                aria-current="page"
+              >
+                Member Area
+              </Button>
+              <UserButton />
+          </div>
+          ):
+          <Link href="/dashboard">
+            <Button
+              variant="premium"
+              className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2 transition-colors duration-300"
+            >
+              Get started
+            </Button>
+          </Link>
+          }
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
@@ -68,38 +84,29 @@ export const LandingNavbar = () => {
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-transparent md:max-md:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
-                href="#"
-                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                aria-current="page"
+                href="#features"
+                className={`block py-2 px-3 bg-transparent md:bg-transparent hover:bg-purple-500 md:hover:bg-transparent text-white md:max-md:bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded md:p-0 md:dark:text-blue-500`}
               >
-                Home
+                Product
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+            <a
+                href="#pricing"
+                className={`block py-2 px-3 bg-transparent md:bg-transparent focus:bg-purple-500 hover:bg-purple-500 md:hover:bg-transparent text-white md:max-md:bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded md:p-0 md:dark:text-blue-500`}
               >
-                About
+                Pricing
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+            <a
+                href="#faqs"
+                className={`block py-2 px-3 bg-transparent md:bg-transparent hover:bg-purple-500 md:hover:bg-transparent text-white md:max-md:bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded md:p-0 md:dark:text-blue-500`}
               >
-                Services
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Contact
+                FAQs
               </a>
             </li>
           </ul>

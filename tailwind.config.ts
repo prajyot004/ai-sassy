@@ -6,6 +6,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+	"./node_modules/flowbite/**/*.js"
   ],
   theme: {
   	extend: {
@@ -62,6 +63,9 @@ const config: Config = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+	require('tailwindcss-animate'),
+    require('flowbite/plugin')
+	]
 };
 export default config;
