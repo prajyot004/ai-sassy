@@ -13,12 +13,12 @@ export const checkSubscription = async () => {
   const   
  userSubscription = await prismadb.userSubscription.findUnique({
     where: { userId },
-    select: {
+    /*select: {
       stripeSubscriptionId: true,
       stripeCurrentPeriodEnd: true,
       stripeCustomerId: true, 
       stripePriceId: true, 
-    },
+    },*/
   });
   console.log({
     userSubscription
@@ -34,8 +34,8 @@ export const checkSubscription = async () => {
     return false; 
   }
   const isValid = 
-      userSubscription.stripePriceId && 
+      userSubscription.stripePriceId
       userSubscription.stripeCurrentPeriodEnd?.getTime()! + DAY_IN_MS > Date.now(); 
 
-    return !!isValid; 
+    return !!isValid;
 };

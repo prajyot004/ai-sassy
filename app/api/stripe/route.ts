@@ -6,7 +6,8 @@ import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils"; 
 import { stringify } from "querystring";
 
-const settingsUrl = absoluteUrl("/settings");
+const settingsUrl = 'http://localhost:3000/settings?session_id={CHECKOUT_SESSION_ID}';
+const cancelUrl = 'http://localhost:3000/settings';
 interface RequestBody {
   plan: any; // You can replace 'any' with the actual type of 'plan'
 }
@@ -16,6 +17,9 @@ interface CustomerDetails {
 }
 async function createOrRetrieveCustomerWithEmail(details: CustomerDetails): Promise<string> {
   const { email, name } = details;
+
+  console.log("User Email:", email);
+  console.log("User Name:", name);
 
   try {
     // Try to find an existing customer by email
@@ -45,13 +49,11 @@ export async function POST(req: NextRequest) {
   const body: RequestBody = await req.json(); // Parse the request body
   const { plan } = body;
 
-  console.log(plan);
-  
-  
-
   try {
     const { userId } = auth();
     const user = await currentUser();
+
+    console.log(userId)
 
     if (!userId || !user) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -67,19 +69,15 @@ export async function POST(req: NextRequest) {
         return_url: settingsUrl
       })
 
-
       return new NextResponse(JSON.stringify({url: stripeSession.url}))
     }
 
     if (!plan) {
       return new NextResponse(JSON.stringify({ message: 'Please select a plan' }))
     }
-
     
     const count = plan.count;
     const stripePriceId = plan.stripePriceId;
-    
-    
 
     const customerId= await createOrRetrieveCustomerWithEmail({
       email: user.emailAddresses[0].emailAddress,
@@ -88,7 +86,7 @@ export async function POST(req: NextRequest) {
 
     const stripeSession = await stripe.checkout.sessions.create({
       success_url: settingsUrl,
-      cancel_url: settingsUrl, 
+      cancel_url: cancelUrl, 
       payment_method_types: ["card"], 
       mode: "subscription", 
       billing_address_collection: "auto",
@@ -97,8 +95,7 @@ export async function POST(req: NextRequest) {
         {
           price: stripePriceId,
           quantity: 1,
-        }
-
+        },
       ], 
       metadata: { 
         userId,
@@ -111,13 +108,21 @@ export async function POST(req: NextRequest) {
           userId,
           count,
           stripePriceId,
-        }
+        },
       }
-
-
     })
-    return new NextResponse(JSON.stringify({url: stripeSession.url}))
 
+      /*const newUser = await prismadb.userApiLimit.create({
+          data: {
+          userId: userId,
+          count: 0,
+          limit: 10
+          },
+      });*/
+
+    //console.log("NewUser: " + newUser);
+
+    return new NextResponse(JSON.stringify({url: stripeSession.url}))
 
   } catch (error) {
     console.log("[STRIPE_ERROR]", error);

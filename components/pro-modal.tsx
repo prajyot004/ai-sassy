@@ -19,7 +19,7 @@ const pricingPlans = [
       'Community Support',
       'Basic File Sharing',
     ],
-    isPro: false,
+    isPro: false
   },
   {
     title: 'Premium',

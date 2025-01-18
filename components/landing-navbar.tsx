@@ -29,32 +29,19 @@ export const LandingNavbar = () => {
             width={32}
             height={32}
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
+          <span className="self-center max-sm:text-[18px] md:text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
             ultimail.ai
           </span>
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          {isSignedIn ? (
-            <div className="flex gap-[16px]">
-              <Button
-                variant="premium"
-                className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2 transition-colors duration-300"
-                aria-current="page"
-              >
-                Member Area
-              </Button>
-              <UserButton />
-          </div>
-          ):
           <Link href="/dashboard">
             <Button
               variant="premium"
               className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2 transition-colors duration-300"
             >
-              Get started
+              {isSignedIn ? "Member Area" : "Get started"}
             </Button>
           </Link>
-          }
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

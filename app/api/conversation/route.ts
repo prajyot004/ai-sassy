@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Messages are required" }, { status: 400 });
     }
     
-     const freeTrial = await checkApiLimit(); 
+    const freeTrial = await checkApiLimit(); 
     const isPro = await checkSubscription(); 
 
     if (!freeTrial && !isPro) { 
@@ -36,7 +36,8 @@ export async function POST(req: Request) {
     } 
     
     if (!isPro) { 
-      await increaseApiLimit(); 
+      await increaseApiLimit();
+      console.log("increaseLimit"); 
     }
 
     // Simplicity instructions

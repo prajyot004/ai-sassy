@@ -18,7 +18,6 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         UserApiLimit = await prismadb.userApiLimit.findUnique({
             where: { userId },
         });
-    
 
     return (
         <div className="h-full relative">
