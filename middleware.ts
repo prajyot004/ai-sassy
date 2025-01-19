@@ -1,7 +1,10 @@
 import {
+  authMiddleware,
     clerkMiddleware,
     createRouteMatcher
   } from '@clerk/nextjs/server';
+
+  const publicRoutes = ["/", "/api/webhook"];
   
   const isProtectedRoute = createRouteMatcher([
     '/dashboard(.*)',
@@ -9,6 +12,17 @@ import {
   
   export default clerkMiddleware((auth, req) => {
     if (isProtectedRoute(req)) auth().protect();
+
+    const requestedRoute = req.nextUrl.pathname;
+
+    if (publicRoutes.includes(requestedRoute)) {
+      return;
+    }
+  
+    // Wende Schutz für geschützte Routen an
+    if (isProtectedRoute(req)) {
+      auth().protect();
+    }
   });
   
   export const config = {

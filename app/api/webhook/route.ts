@@ -30,7 +30,6 @@ export async function POST(req: Request) {
 
       const metadata = subscription.metadata;
       const { userId, count, stripePriceId } = metadata;
-      
 
       try {
         // Create or update UserSubscription
@@ -129,6 +128,9 @@ export async function POST(req: Request) {
       }
     }
 
+    case "refund.created": {
+        
+    }
     default:
       console.log(`Unhandled event type: ${event.type}`);
   }

@@ -7,7 +7,6 @@ interface RequestBody {
 }
 
 export async function POST() { 
-
     try {
         const { userId } = auth();
         const user = await currentUser();

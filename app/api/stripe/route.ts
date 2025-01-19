@@ -5,9 +5,14 @@ import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe"; 
 import { absoluteUrl } from "@/lib/utils"; 
 import { stringify } from "querystring";
+import { increaseApiLimit } from "@/lib/api-limit";
+import Stripe from "stripe";
 
-const settingsUrl = 'http://localhost:3000/settings?session_id={CHECKOUT_SESSION_ID}';
-const cancelUrl = 'http://localhost:3000/settings';
+const settingsUrl = absoluteUrl("/settings");
+const cancelUrl = absoluteUrl("/settings");
+
+console.log(settingsUrl);
+
 interface RequestBody {
   plan: any; // You can replace 'any' with the actual type of 'plan'
 }
@@ -111,14 +116,6 @@ export async function POST(req: NextRequest) {
         },
       }
     })
-
-      /*const newUser = await prismadb.userApiLimit.create({
-          data: {
-          userId: userId,
-          count: 0,
-          limit: 10
-          },
-      });*/
 
     //console.log("NewUser: " + newUser);
 
