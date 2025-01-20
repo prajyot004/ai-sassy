@@ -105,8 +105,8 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       // Clear the formData from sessionStorage
       sessionStorage.removeItem('formData');
 
-      let emailHistory=JSON.parse( localStorage.getItem("emailHistory"));
-      localStorage.setItem('emailHistory',JSON.stringify(emailHistory));
+      //let emailHistory=JSON.parse( localStorage.getItem("emailHistory"));
+      //localStorage.setItem('emailHistory',JSON.stringify(emailHistory));
       console.log("Email sent")
     }
   }, [form, onSubmit]);
