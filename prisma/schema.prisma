@@ -24,3 +24,8 @@ model UserSubscription {
   stripePriceId          String?   @map("stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map("stripe_current_period_end")
 }
+
+model UserEmailHistory{
+  id                     String    @id @default(cuid())
+  userId                 String    @unique
+}
