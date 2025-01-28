@@ -22,6 +22,8 @@ export async function POST(req: Request) {
 
   const session = event.data.object as Stripe.Checkout.Session;
 
+  console.log("Event : "+event);
+
   switch (event.type) {
     case "invoice.payment_succeeded": {
       const subscription = await stripe.subscriptions.retrieve(
@@ -73,6 +75,15 @@ export async function POST(req: Request) {
         return new NextResponse(`Database Error: ${error.message}`, { status: 500 });
       }
     }
+
+    // case "checkout.session.completed":{
+    //   const session = await stripe.subscriptions.retrieve(
+    //     session.subscription as string
+    //   );
+
+
+
+    // }
 
     case "invoice.payment_failed": {
       const subscription = await stripe.subscriptions.retrieve(

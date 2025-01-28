@@ -20,11 +20,11 @@ interface FreeCounterProps {
 
 export const FreeCounter: React.FC<FreeCounterProps> = ({ apiLimitCount = 0, isPro = false, limit }) => {
     const proModal = useProModal(); 
-    console.log({
-        apiLimitCount,
-        isPro,
-        limit,
-    })
+    // console.log({
+    //     apiLimitCount,
+    //     isPro,
+    //     limit,
+    // })
     const [mounted, setMounted] = useState(false); 
 
     useEffect(() => {

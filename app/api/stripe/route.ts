@@ -27,6 +27,7 @@ async function createOrRetrieveCustomerWithEmail(details: CustomerDetails): Prom
   console.log("User Name:", name);
 
   try {
+    
     // Try to find an existing customer by email
     const existingCustomers = await stripe.customers.list({
       email,

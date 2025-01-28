@@ -9,7 +9,7 @@ const SettingsPage = async () => {
   const isPro = await checkSubscription();
   const user = await currentUser(); // Fetch user data from Clerk
 
-  console.log("Pro: " + isPro);
+  // console.log("Pro: " + isPro);
 
   return (
     <div className="max-w-4xl py-8 space-y-8">

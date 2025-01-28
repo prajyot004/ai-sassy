@@ -4,7 +4,7 @@ import prismadb from "@/lib/prismadb";
 
 
 const page =async () => {
-  console.log("@23",);
+  // console.log("@23",);
   const { userId } = auth();
 
     if (!userId) {
@@ -21,9 +21,9 @@ const page =async () => {
         stripePriceId: true,
       },
     });
-  console.log({
-    userSubscription
-  })
+  // console.log({
+  //   userSubscription
+  // })
   
 
   return (
