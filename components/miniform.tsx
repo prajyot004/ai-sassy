@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, FormItem, FormControl } from "@/components/ui/form";
 import { useEffect } from 'react';
-import { auth } from '@clerk/nextjs/server';
+import { useAuth } from '@clerk/nextjs';
 
 interface MiniFormProps {
   className?: string;
@@ -14,7 +14,7 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
   const router = useRouter();
   const formMethods = useForm();
   const { control, getValues, reset } = formMethods;
-  const { userId } = auth();
+  const { userId } = useAuth();
 
   const handleClick = async () => {
     const formData = getValues();

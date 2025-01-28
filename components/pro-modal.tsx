@@ -57,6 +57,7 @@ export const ProModal = () => {
   const [loading, setLoading] = useState(false);
 
   const onSubscribe = async (plan:any) => {
+    console.log("inside on subscribe");
     try {
       if (!plan.stripePriceId) {
         throw new Error("Price ID is missing.");
@@ -114,7 +115,7 @@ export const ProModal = () => {
                 <DialogFooter className="w-full">
                  
                     <Button
-                      disabled={loading || !plan.stripePriceId}
+                      disabled={loading}
                       onClick={() => plan.stripePriceId && onSubscribe(plan)}
                       size="lg"
                       variant="premium"

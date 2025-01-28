@@ -28,7 +28,7 @@ const pricingPlans = [
       "Enhanced File Sharing",
       "File Version History (30 days)",
     ],
-    isPro: false,
+    isPro: true,
   },
   {
     title: "Ultimate",
@@ -64,6 +64,7 @@ const itemVariants = {
 };
 
 const handleSubscribe = async (plan: any) => {
+  console.log("inside handle subscribe");
   try {
     console.log(plan);
     if (plan.price === "Free") {
