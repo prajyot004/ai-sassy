@@ -22,13 +22,16 @@ export async function POST(req: Request) {
 
   const session = event.data.object as Stripe.Checkout.Session;
 
-  console.log("Event : "+event);
+
+  console.log("Event : "+ JSON.stringify(event,null,2));
 
   switch (event.type) {
     case "invoice.payment_succeeded": {
       const subscription = await stripe.subscriptions.retrieve(
         session.subscription as string
       );
+
+      console.log("Subscription:", JSON.stringify(subscription, null, 2));
 
       const metadata = subscription.metadata;
       const { userId, count, stripePriceId } = metadata;
@@ -75,15 +78,6 @@ export async function POST(req: Request) {
         return new NextResponse(`Database Error: ${error.message}`, { status: 500 });
       }
     }
-
-    // case "checkout.session.completed":{
-    //   const session = await stripe.subscriptions.retrieve(
-    //     session.subscription as string
-    //   );
-
-
-
-    // }
 
     case "invoice.payment_failed": {
       const subscription = await stripe.subscriptions.retrieve(
@@ -139,11 +133,15 @@ export async function POST(req: Request) {
       }
     }
 
-    case "refund.created": {
-        
+    case "customer.subscription.updated": {
+        console.log("inside Customer Subscription Updated");
+        const subscription = event.data.object as Stripe.Subscription;
+        console.log("Subscription:", JSON.stringify(subscription, null, 2));
+
     }
     default:
       console.log(`Unhandled event type: ${event.type}`);
+      console.log("Event : "+ JSON.stringify(event,null,2));
   }
 
   return new NextResponse(null, { status: 200 });
