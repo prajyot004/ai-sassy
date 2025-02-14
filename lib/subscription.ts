@@ -10,7 +10,7 @@ export const checkSubscription = async () => {
     return false;
   }
 
-  const   
+  const   
  userSubscription = await prismadb.userSubscription.findUnique({
     where: { userId },
     /*select: {
@@ -23,7 +23,7 @@ export const checkSubscription = async () => {
   // console.log({
   //   userSubscription
   // })
-  const   
+  const   
     UserApiLimit = await prismadb.userApiLimit.findUnique({
     where: { userId },
   });

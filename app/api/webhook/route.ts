@@ -22,8 +22,10 @@ export async function POST(req: Request) {
 
   const session = event.data.object as Stripe.Checkout.Session;
 
-
-  console.log("Event : "+ JSON.stringify(event,null,2));
+  const planLimits: { [key: string]: number } = {
+    'price_1Qly9mK1ShPPkgJQt7iEF2gU': 100,  // Pro plan
+    'price_1QlyAnK1ShPPkgJQsF7GQKZO': 300   // Premium plan
+  };
 
   switch (event.type) {
     case "invoice.payment_succeeded": {
@@ -34,7 +36,9 @@ export async function POST(req: Request) {
       console.log("Subscription:", JSON.stringify(subscription, null, 2));
 
       const metadata = subscription.metadata;
-      const { userId, count, stripePriceId } = metadata;
+      const { userId, stripePriceId } = metadata;
+
+      const count =planLimits[subscription.items.data[0].price.id];
 
       try {
         // Create or update UserSubscription
@@ -45,17 +49,18 @@ export async function POST(req: Request) {
           update: {
             stripeSubscriptionId: subscription.id,
             stripeCustomerId: subscription.customer as string,
-            stripePriceId: stripePriceId || subscription.items.data[0].price.id,
+            stripePriceId:subscription.items.data[0].price.id,
             stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
           },
           create: {
             userId: userId,
             stripeSubscriptionId: subscription.id,
             stripeCustomerId: subscription.customer as string,
-            stripePriceId: stripePriceId || subscription.items.data[0].price.id,
+            stripePriceId: subscription.items.data[0].price.id,
             stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
           },
         });
+
 
         // Upsert UserApiLimit - either update count if it exists, or create a new record
         await prismadb.userApiLimit.upsert({
@@ -63,17 +68,24 @@ export async function POST(req: Request) {
             userId: userId,
           },
           update: {
-            count: parseInt(count) || 0,
-            limit: parseInt(count) || 0,
+            count: count || 15,
+            limit: count || 15,
           },
           create: {
             userId: userId,
-            count: parseInt(count) || 0,
-            limit: parseInt(count) || 0,
+            count: count || 15,
+            limit: count || 15,
           },
         });
 
-        return new NextResponse(null, { status: 200 });
+        return new NextResponse(JSON.stringify({
+          redirectUrl: '/settings'
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
       } catch (error: any) {
         return new NextResponse(`Database Error: ${error.message}`, { status: 500 });
       }
@@ -101,7 +113,15 @@ export async function POST(req: Request) {
         });
 
         console.log(`Payment failed for user: ${userId} and their data has been deleted`);
-        return new NextResponse(null, { status: 200 });
+
+        return new NextResponse(JSON.stringify({
+          redirectUrl: '/settings'
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
       } catch (error: any) {
         return new NextResponse(`Failed Payment Handling Error: ${error.message}`, { status: 200 });
       }
@@ -127,18 +147,97 @@ export async function POST(req: Request) {
         });
 
         console.log(`Subscription deleted for user: ${userId} and their data has been deleted`);
-        return new NextResponse(null, { status: 200 });
+        return new NextResponse(JSON.stringify({
+          redirectUrl: '/settings'
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
       } catch (error: any) {
         return new NextResponse(`Subscription Deletion Error: ${error.message}`, { status: 200 });
       }
     }
 
     case "customer.subscription.updated": {
-        console.log("inside Customer Subscription Updated");
-        const subscription = event.data.object as Stripe.Subscription;
-        console.log("Subscription:", JSON.stringify(subscription, null, 2));
+      console.log("inside customer subsciption updated case :");
+
+      const subscription = event.data.object as Stripe.Subscription;
+      console.log("Subscription is :", JSON.stringify(subscription, null, 2));
+
+      // Get the price ID from metadata as it represents the intended plan
+      const priceId = subscription.metadata.stripePriceId;
+      const { userId } = subscription.metadata;
+
+      try {
+        // Define email limits for different plans
+        
+
+        console.log("Current Price ID:", priceId);
+        console.log("Subscription Status:", subscription.status);
+        console.log("Cancel at Period End:", subscription.cancel_at_period_end);
+
+        // Get the new limit based on the price ID
+        const newLimit = planLimits[priceId] || 15; // Default to free plan limit if price not found
+        console.log("Calculated New Limit:", newLimit);
+
+        // Check if subscription is cancelled
+        if (subscription.cancel_at_period_end || subscription.status === 'canceled') {
+          // Reset to free plan
+          await prismadb.userApiLimit.upsert({
+            where: {
+              userId: userId,
+            },
+            update: {
+              count: newLimit,
+              limit: newLimit,
+            },
+            create: {
+              userId: userId,
+              count: newLimit,
+              limit: newLimit,
+            },
+          });
+          console.log(`Reset API limits to free plan for user: ${userId}`);
+        } else {
+          // Update to new plan limit
+          await prismadb.userApiLimit.upsert({
+            where: {
+              userId: userId,
+            },
+            update: {
+              count: newLimit,
+              limit: newLimit,
+            },
+            create: {
+              userId: userId,
+              count: newLimit,
+              limit: newLimit,
+            },
+          });
+          console.log(`Updated API limits to ${newLimit} for user: ${userId}`);
+        }
+
+        return new NextResponse(JSON.stringify({
+          redirectUrl: '/settings'
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error: any) {
+        console.error("Error updating API limits:", error);
+        return new NextResponse(`Database Error: ${error.message}`, { status: 500 });
+      }
+    }
+
+    case "refund.created": {
 
     }
+
+
     default:
       console.log(`Unhandled event type: ${event.type}`);
       console.log("Event : "+ JSON.stringify(event,null,2));
