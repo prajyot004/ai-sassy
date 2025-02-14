@@ -10,7 +10,7 @@ export const checkSubscription = async () => {
     return false;
   }
 
-  const   
+  const   
  userSubscription = await prismadb.userSubscription.findUnique({
     where: { userId },
     /*select: {
@@ -20,16 +20,16 @@ export const checkSubscription = async () => {
       stripePriceId: true, 
     },*/
   });
-  console.log({
-    userSubscription
-  })
-  const   
+  // console.log({
+  //   userSubscription
+  // })
+  const   
     UserApiLimit = await prismadb.userApiLimit.findUnique({
     where: { userId },
   });
-  console.log({
-    userSubscription,UserApiLimit
-  })
+  // console.log({
+  //   userSubscription,UserApiLimit
+  // })
   if (!userSubscription) { 
     return false; 
   }

@@ -14,6 +14,7 @@ import { Empty } from "@/components/empty";
 import { useProModal } from "@/hooks/use-pro-model";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
 
 const formSchema = z.object({
   sender: z.string().nonempty("Sender is required"),
@@ -121,128 +122,131 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
 //         }
 // },[emailContent]);
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#1E293B]">
-      <div className="w-full max-w-6xl bg-white rounded-3xl p-10 space-y-8 relative border-4 border-transparent bg-clip-border gradient-border">
-        <Heading
-          title="Email Generator"
-          description="Generate professional emails quickly by providing the sender, receiver, content, tone, and length."
-          icon={Mail}
-          iconColor="text-purple-600"
-          bgColor="bg-white"
-          titleClass="text-black"
-        />
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              name="sender"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
-                      disabled={isLoading}
-                      placeholder="Sender's Email"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="receiver"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
-                      disabled={isLoading}
-                      placeholder="Receiver's Email"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="content"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <textarea
-                      className="text-lg border border-gray-300 bg-white text-black rounded-3xl shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
-                      disabled={isLoading}
-                      placeholder="Write your message here"
-                      {...field}
-                      style={{ height: '150px', resize: 'none' }}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="tone"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <select
-                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
-                      disabled={isLoading}
-                      {...field}
-                    >
-                      <option value="Formal">Formal</option>
-                      <option value="Informal">Informal</option>
-                      <option value="Professional">Professional</option>
-                      <option value="Casual">Casual</option>
-                    </select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="length"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <select
-                      className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
-                      disabled={isLoading}
-                      {...field}
-                    >
-                      <option value="Short">Short</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Long">Long</option>
-                    </select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Button
-              className="w-full py-3 text-lg bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors"
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading ? <Loader2 className="animate-spin w-5 h-5" /> : "Generate Email"}
-            </Button>
-          </form>
-        </Form>
+    <div>
+      {isLoading && <LoadingOverlay message="Generating your email..." />}
+      <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#1E293B]">
+        <div className="w-full max-w-6xl bg-white rounded-3xl p-10 space-y-8 relative border-4 border-transparent bg-clip-border gradient-border">
+          <Heading
+            title="Email Generator"
+            description="Generate professional emails quickly by providing the sender, receiver, content, tone, and length."
+            icon={Mail}
+            iconColor="text-purple-600"
+            bgColor="bg-white"
+            titleClass="text-black"
+          />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                name="sender"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                        disabled={isLoading}
+                        placeholder="Sender's Email"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="receiver"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                        disabled={isLoading}
+                        placeholder="Receiver's Email"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="content"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <textarea
+                        className="text-lg border border-gray-300 bg-white text-black rounded-3xl shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                        disabled={isLoading}
+                        placeholder="Write your message here"
+                        {...field}
+                        style={{ height: '150px', resize: 'none' }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="tone"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <select
+                        className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                        disabled={isLoading}
+                        {...field}
+                      >
+                        <option value="Formal">Formal</option>
+                        <option value="Informal">Informal</option>
+                        <option value="Professional">Professional</option>
+                        <option value="Casual">Casual</option>
+                      </select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="length"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <select
+                        className="text-lg border-gray-300 bg-white text-black rounded-full shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 w-full"
+                        disabled={isLoading}
+                        {...field}
+                      >
+                        <option value="Short">Short</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Long">Long</option>
+                      </select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <Button
+                className="w-full py-3 text-lg bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader2 className="animate-spin w-5 h-5" /> : "Generate Email"}
+              </Button>
+            </form>
+          </Form>
 
-        {isLoading ? (
-          <div className="mt-6 p-6 flex justify-center items-center">
-            <Loader2 className="animate-spin text-black w-12 h-12" />
-          </div>
-        ) : emailContent ? (
-          <div className="mt-7 p-6 bg-gray-100 border border-gray-300 rounded-2xl shadow-sm">
-            <h2 className="text-2xl font-semibold mb-4 text-black">Generated Email:</h2>
-            <div className="whitespace-pre-line text-black text-lg">{emailContent}</div>
-          </div>
-        ) : (
-          <Empty label="No email generated yet." />
-        )}
+          {isLoading ? (
+            <div className="mt-6 p-6 flex justify-center items-center">
+              <Loader2 className="animate-spin text-black w-12 h-12" />
+            </div>
+          ) : emailContent ? (
+            <div className="mt-7 p-6 bg-gray-100 border border-gray-300 rounded-2xl shadow-sm">
+              <h2 className="text-2xl font-semibold mb-4 text-black">Generated Email:</h2>
+              <div className="whitespace-pre-line text-black text-lg">{emailContent}</div>
+            </div>
+          ) : (
+            <Empty label="No email generated yet." />
+          )}
+        </div>
       </div>
     </div>
   );
