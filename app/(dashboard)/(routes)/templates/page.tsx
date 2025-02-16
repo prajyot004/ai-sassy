@@ -134,26 +134,32 @@ const TemplatesPage = () => {
       {/* Templates Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl">
         {templates.map((template) => (
-          <Card
-            key={template.title}
-            onClick={() => toggleExpand(template.title)}
-            className="bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow cursor-pointer flex flex-col items-center p-6"
-          >
-            <div className={`p-4 mb-4 rounded-full ${template.bgColor}`}>
-              <template.icon className={`w-12 h-12 ${template.color}`} />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {template.title}
-            </h3>
-            <p className="text-gray-600 text-center mb-4">
-              {template.description}
-            </p>
+          <React.Fragment key={template.title}>
             {expandedTemplate === template.title && (
-              <div className="mt-4 text-left w-full text-gray-800">
-                <pre className="whitespace-pre-wrap">{template.content}</pre>
+              <div className="fixed inset-0 m-auto my-8 bg-[#111827] border-4 border-[#BD52C2] shadow-lg rounded-3xl p-6 mb-6 z-10 w-3/4 md:w-2/3 h-auto md:h-90">
+                <button onClick={() => setExpandedTemplate(null)} className="absolute top-0 right-0 m-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 text-white w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                <pre className="whitespace-pre-wrap text-white">{template.content}</pre>
               </div>
             )}
-          </Card>
+            <Card
+              onClick={() => toggleExpand(template.title)}
+              className="bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow cursor-pointer flex flex-col items-center p-6"
+            >
+              <div className={`p-4 mb-4 rounded-full ${template.bgColor}`}>
+                <template.icon className={`w-12 h-12 ${template.color}`} />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {template.title}
+              </h3>
+              <p className="text-gray-600 text-center mb-4">
+                {template.description}
+              </p>
+            </Card>
+          </React.Fragment>
         ))}
       </div>
     </div>
