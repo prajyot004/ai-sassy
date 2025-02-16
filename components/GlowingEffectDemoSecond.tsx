@@ -93,7 +93,7 @@ export function GlowingEffectDemoSecond() {
               <GlowingEffect
                 blur={0}
                 borderWidth={3}
-                spread={80}
+                spread={150}
                 glow={true}
                 disabled={isLoading}
                 proximity={64}
@@ -102,7 +102,7 @@ export function GlowingEffectDemoSecond() {
             </div>
             <span className="relative z-10 flex items-center gap-2">
               Get Started
-              <Sparkles className="h-5 w-5" />
+              <Sparkles className="h-5 w-5 hover:text-yellow-200" />
             </span>
           </button>
         </div>
@@ -126,7 +126,7 @@ const GridItem = ({ area, icon, title, description, bottomLine }: GridItemProps)
         <GlowingEffect
           blur={0}
           borderWidth={3}
-          spread={80}
+          spread={130}
           glow={true}
           disabled={false}
           proximity={64}

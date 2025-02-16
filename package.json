@@ -31,6 +31,7 @@
     "flowbite": "^2.5.2",
     "framer-motion": "^11.4.0",
     "lucide-react": "^0.438.0",
+    "motion": "^12.4.3",
     "next": "^14.2.7",
     "openai": "^4.80.1",
     "react": "^18",

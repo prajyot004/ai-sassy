@@ -38,6 +38,18 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
   const proModal = useProModal();
   const router = useRouter();
 
+  const getURLParams = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        content: params.get('content') || '',
+        tone: params.get('tone') as "Formal" | "Informal" | "Professional" | "Casual" || "Formal",
+        length: params.get('length') as "Short" | "Medium" | "Long" || "Short"
+      };
+    }
+    return null;
+  }, []);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,6 +61,15 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
     },
   });
 
+  useEffect(() => {
+    const params = getURLParams();
+    if (params) {
+      form.setValue('content', params.content);
+      form.setValue('tone', params.tone);
+      form.setValue('length', params.length);
+    }
+  }, [form, getURLParams]);
+  
   const [emailContent, setEmailContent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -66,6 +87,11 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
           { role: "system", content: "You are a helpful assistant that generates emails." },
           { role: "user", content: `Write a ${values.length} email with a ${values.tone} tone from ${values.sender} to ${values.receiver} with the following content: ${values.content}` },
         ],
+        formData: {
+          receiver: values.receiver,
+          tone: values.tone,
+          length: values.length,
+        }
       });
    
       if (response.data.choices[0]?.message?.content && userSubscription !== null) {
