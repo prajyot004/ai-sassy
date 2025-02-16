@@ -33,6 +33,8 @@ export async function POST(req: Request) {
         session.subscription as string
       );
 
+      console.log("Subscription:", JSON.stringify(subscription, null, 2));
+
       const metadata = subscription.metadata;
       const { userId, stripePriceId } = metadata;
 
@@ -238,6 +240,7 @@ export async function POST(req: Request) {
 
     default:
       console.log(`Unhandled event type: ${event.type}`);
+      console.log("Event : "+ JSON.stringify(event,null,2));
   }
 
   return new NextResponse(null, { status: 200 });

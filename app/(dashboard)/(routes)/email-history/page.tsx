@@ -13,13 +13,26 @@ const EmailHistoryPage = async () => {
   const emails = await prismadb.userEmailHistory.findMany({
     where: {
       userId: userId
+    },
+    orderBy: {
+      createdAt: 'desc'
+    },
+    select: {
+      id: true,
+      userId: true,
+      receiver: true,
+      content: true,
+      tone: true,
+      length: true,
+      createdAt: true,
+      updatedAt: true
     }
   });
 
   console.log("emails are : " + JSON.stringify(emails));
 
   return (
-    <div className="px-4 md:px-8 lg:px-12">
+    <div className="px-4 py-5 md:px-8 md:py-5 lg:px-12 lg:py-6">
       <EmailHistoryClient initialEmails={emails} />
     </div>
   );
