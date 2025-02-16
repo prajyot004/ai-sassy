@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
+import prismadb from "@/lib/prismadb";
 
 import { checkSubscription } from "@/lib/subscription"; 
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
@@ -14,7 +15,7 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { messages } = body;
+    const { messages, formData } = body;
 
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -55,9 +56,22 @@ export async function POST(req: Request) {
 
     console.log("OpenAI response:", response);
 
+    // Store email history
+    if (formData) {
+      await prismadb.userEmailHistory.create({
+        data: {
+          userId,
+          receiver: formData.receiver,
+          content: response.choices[0]?.message?.content || "",
+          tone: formData.tone,
+          length: formData.length,
+        }
+      });
+    }
+
     return NextResponse.json(response);
   } catch (error:any) {
     console.log("[CONVERSATION_ERROR]", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
