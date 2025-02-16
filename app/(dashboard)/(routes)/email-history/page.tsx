@@ -32,7 +32,7 @@ const EmailHistoryPage = async () => {
   console.log("emails are : " + JSON.stringify(emails));
 
   return (
-    <div className="px-4 py-5 md:px-8 md:py-5 lg:px-12 lg:py-6">
+    <div className="px-4 py-5 md:px-8 md:py-5 lg:px-12 lg:py-6 bg-[#1E293B] min-h-screen">
       <EmailHistoryClient initialEmails={emails} />
     </div>
   );

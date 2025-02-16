@@ -18,6 +18,7 @@ import { Loader } from "@/components/ui/loader";
 import { FreeCounter } from "@/components/free-counter";
 import { ProModal } from "@/components/pro-modal";
 
+
 interface SettingsClientProps {
   isPro: boolean;
   apiLimitCount: number;
@@ -31,13 +32,15 @@ interface SettingsClientProps {
     }>;
     imageUrl: string;
   } | null;
+  limit:number;
 }
 
-const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => {
+const SettingsClient = ({ isPro, apiLimitCount, user,limit }: SettingsClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const proModal = useProModal();
+  
 
   const onSubscribe = async () => {
     try {
@@ -67,13 +70,16 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
     <div>
       <ProModal />
       {(isLoading || loading) && <LoadingOverlay message="Updating settings..." />}
-      <div className="container mx-auto py-8 px-4 max-w-5xl space-y-8">
+      <div className="container mx-auto py-8 px-4 max-w-5xl space-y-8 bg-[#1E293B]">
         <Heading
           title="Settings"
           description="Manage account settings and preferences"
           icon={Settings}
-          iconColor="text-gray-700"
+          iconColor="text-white"
           bgColor="bg-gray-700/10"
+          titleClass="text-5xl font-extrabold text-white mb-4"
+          descriptionClass="text-lg text-gray-400"
+
         />
 
         <div className="grid grid-cols-1 gap-6 place-items-center">
@@ -110,7 +116,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
               <Separator className="my-4" />
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <div>
+                  <div className=" mx-3">
                     <p className="font-medium">Plan</p>
                     <p className="text-sm text-gray-500">{isPro ? "Pro Plan" : "Free Plan"}</p>
                   </div>
@@ -122,7 +128,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
                     <p className="text-lg font-semibold">{isPro ? "Pro" : "Free"}</p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm font-medium text-gray-500">API Usage</p>
+                    <p className="text-sm font-medium text-gray-500">Remaining</p>
                     <p className="text-lg font-semibold">{apiLimitCount} requests</p>
                   </div>
                 </div>
@@ -132,7 +138,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
                   <ul className="space-y-2">
                     <li className="flex items-center text-sm">
                       <div className="h-2 w-2 rounded-full bg-green-500 mr-2" />
-                      {isPro ? "Unlimited" : "Limited"} API requests
+                      {isPro ? limit : "Limited"} API requests
                     </li>
                     <li className="flex items-center text-sm">
                       <div className="h-2 w-2 rounded-full bg-green-500 mr-2" />
@@ -178,35 +184,6 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
               </div>
             </Card>
 
-            {/* Billing Notifications */}
-            <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4">Billing Notifications</h2>
-              <Separator className="my-4" />
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Payment Reminders</p>
-                    <p className="text-sm text-gray-500">Get notified before your next payment</p>
-                  </div>
-                  <Switch defaultChecked />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Usage Alerts</p>
-                    <p className="text-sm text-gray-500">Receive alerts when approaching API limits</p>
-                  </div>
-                  <Switch defaultChecked />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Promotional Updates</p>
-                    <p className="text-sm text-gray-500">Stay informed about special offers</p>
-                  </div>
-                  <Switch />
-                </div>
-              </div>
-            </Card>
             {/* Help Section */}
             <Card className="p-4">
               <div className="flex items-center space-x-2">

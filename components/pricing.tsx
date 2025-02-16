@@ -67,36 +67,9 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const handleSubscribe = async (plan: any) => {
-  console.log("inside handle subscribe");
-  const router = useRouter(); // Use useRouter hook
-  try {
-    console.log(plan);
-    if (plan.price === "Free") {
-      router.push('/conversation'); // Navigate to /conversation page
-      return;
-    }
-
-    // Stripe payment API
-    const response = await axios.post(`/api/stripe?plan=${plan.stripePriceId}`, {
-      plan,
-    });
-    console.log("Stripe API response:", response.data);
-
-    const { url } = response.data;
-    if (url) {
-      window.location.href = url;
-    } else {
-      throw new Error("No URL returned from the Stripe API.");
-    }
-  } catch (err: any) {
-    window.location.href = window.origin + "/sign-up";
-    console.log(err.message);
-  }
-};
-
 const Pricing = () => {
-  const router = useRouter(); // Move useRouter inside the component
+  const router = useRouter();  // Move useRouter inside the component
+
 
   const handleSubscribe = async (plan: any) => {
     console.log("inside handle subscribe");

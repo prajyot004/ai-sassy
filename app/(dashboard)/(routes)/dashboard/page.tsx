@@ -85,7 +85,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Email History Section */}
-      <div className="mt-12 w-full max-w-6xl">
+      {/* <div className="mt-12 w-full max-w-6xl">
         <h2 className="text-3xl font-bold text-white mb-6">Your Created Emails</h2>
         <div className="bg-white shadow-lg rounded-lg p-6">
           {emailHistory.length > 0 ? (
@@ -108,7 +108,7 @@ export default function DashboardPage() {
             </p>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

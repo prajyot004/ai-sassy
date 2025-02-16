@@ -42,15 +42,14 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
 
   if (!emails || emails.length === 0) {
     return (
-      <div className="flex justify-center align-center flex-col">
-        <div className=" bg-red">
-          <Heading
-            title="Email History"
-            description="View and manage your email history"
-            icon={Mail}
-            iconColor="text-gray-700"
-            bgColor="bg-gray-700/10"
-          />
+      <div className="flex flex-col">
+        <div className="text-center">
+          <h1 className="text-5xl font-extrabold text-white mb-4">
+            Email History
+          </h1>
+          <p className="text-lg text-gray-400">
+            View and manage your email history
+          </p>
         </div>
         <div className="px-4 lg:px-8 mt-4">
           <Card className="p-8">
@@ -64,18 +63,18 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
   }
 
   return (
-    <div>
-      <Heading
-        title="Email History"
-        description="View and manage your email history"
-        icon={Mail}
-        iconColor="text-gray-700"
-        bgColor="bg-gray-700/10"
-      />
-
-      <div className="px-4 lg:px-8 space-y-4 mt-4">
+    <div className="flex flex-col">
+      <div className="text-center">
+        <h1 className="text-5xl font-extrabold text-white mb-4">
+          Email History
+        </h1>
+        <p className="text-lg text-gray-400">
+          View and manage your email history
+        </p>
+      </div>
+      <div className="px-4 lg:px-8 mt-4">
         {emails.map((email) => (
-          <Card key={email.id} className="p-4">
+          <Card key={email.id} className="p-4 my-2">
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <div className="font-semibold mb-2">To: {email.receiver}</div>
