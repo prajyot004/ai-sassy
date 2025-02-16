@@ -42,14 +42,16 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
 
   if (!emails || emails.length === 0) {
     return (
-      <div>
-        <Heading
-          title="Email History"
-          description="View and manage your email history"
-          icon={Mail}
-          iconColor="text-gray-700"
-          bgColor="bg-gray-700/10"
-        />
+      <div className="flex justify-center align-center flex-col">
+        <div className=" bg-red">
+          <Heading
+            title="Email History"
+            description="View and manage your email history"
+            icon={Mail}
+            iconColor="text-gray-700"
+            bgColor="bg-gray-700/10"
+          />
+        </div>
         <div className="px-4 lg:px-8 mt-4">
           <Card className="p-8">
             <div className="text-center text-gray-500">

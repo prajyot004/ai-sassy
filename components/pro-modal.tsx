@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { useProModal } from "@/hooks/use-pro-model";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { Badge } from "./ui/badge";
 import { Check, Zap } from "lucide-react";
 import { Card } from "./ui/card";
@@ -33,7 +33,7 @@ const pricingPlans = [
       'Enhanced File Sharing',
       'File Version History (30 days)',
     ],
-    isPro: false,
+    isPro: true,
   },
   {
     title: 'Ultimate',

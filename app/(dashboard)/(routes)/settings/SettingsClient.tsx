@@ -1,7 +1,7 @@
 "use client";
 
 import { Heading } from "@/components/heading";
-import { Settings, User, CreditCard, Bell, Shield, HelpCircle } from "lucide-react";
+import { Settings, User, CreditCard, Bell, Shield, HelpCircle, Zap } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -15,6 +15,8 @@ import { useProModal } from "@/hooks/use-pro-modal";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Loader } from "@/components/ui/loader";
+import { FreeCounter } from "@/components/free-counter";
+import { ProModal } from "@/components/pro-modal";
 
 interface SettingsClientProps {
   isPro: boolean;
@@ -63,6 +65,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
 
   return (
     <div>
+      <ProModal />
       {(isLoading || loading) && <LoadingOverlay message="Updating settings..." />}
       <div className="container mx-auto py-8 px-4 max-w-5xl space-y-8">
         <Heading
@@ -73,9 +76,9 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
           bgColor="bg-gray-700/10"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 place-items-center">
           {/* Main Content */}
-          <div className="md:col-span-2 space-y-6">
+          <div className="space-y-6">
             {/* Account Information */}
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
@@ -111,7 +114,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
                     <p className="font-medium">Plan</p>
                     <p className="text-sm text-gray-500">{isPro ? "Pro Plan" : "Free Plan"}</p>
                   </div>
-                  
+
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-4 rounded-lg">
@@ -123,7 +126,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
                     <p className="text-lg font-semibold">{apiLimitCount} requests</p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="text-sm font-medium text-gray-500 mb-2">Plan Features</h3>
                   <ul className="space-y-2">
@@ -143,7 +146,29 @@ const SettingsClient = ({ isPro, apiLimitCount, user }: SettingsClientProps) => 
                 </div>
 
                 <div>
-                  <SubscriptionButton isPro={isPro} />
+                  {!isPro ? (
+                    <Button 
+                      onClick={proModal.onOpen} 
+                      className="w-full mb-4" 
+                      variant="premium"
+                    >
+                      Upgrade to Pro
+                      <Zap className="w-4 h-4 ml-2 fill-white" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={onManageSubscription}
+                      className="w-full mb-4"
+                      variant="default"
+                    >
+                      Manage Subscription
+                    </Button>
+                  )}
+                  {/* <FreeCounter
+                    limit={15}
+                    isPro={isPro}
+                    apiLimitCount={apiLimitCount}
+                  /> */}
                   {!isPro && (
                     <p className="text-sm text-gray-500 mt-2">
                       Upgrade to Pro for unlimited access and premium features.
