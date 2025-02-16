@@ -84,53 +84,54 @@ export const ProModal = () => {
 
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
-            <div className="flex items-center gap-x-2 font-bold py-1">
-              Upgrade to Genius
-              <Badge variant="premium" className="uppercase text-sm py-1">
-                pro
-              </Badge>
+  <DialogContent className="max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <DialogHeader>
+      <DialogTitle className="flex justify-center items-center flex-col gap-y-4 pb-2">
+        <div className="flex items-center gap-x-2 font-bold py-1">
+          Upgrade to Genius
+          <Badge variant="premium" className="uppercase text-sm py-1">
+            pro
+          </Badge>
+        </div>
+      </DialogTitle>
+      <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
+        {pricingPlans.map((plan, index) => (
+          <Card
+            key={index}
+            className="p-4 border-black/5 flex flex-col items-start justify-between mb-4"
+          >
+            <div className="flex items-center gap-x-4 mb-2">
+              <div className="font-semibold text-lg">{plan.title}</div>
+              <div className="text-xl font-bold">{plan.price}</div>
             </div>
-          </DialogTitle>
-          <DialogDescription className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
-            {pricingPlans.map((plan, index) => (
-              <Card
-                key={index}
-                className="p-4 border-black/5 flex flex-col items-start justify-between mb-4"
+            <ul className="text-sm mb-4">
+              {plan.features.map((feature, idx) => (
+                <li key={idx} className="text-zinc-700 mb-1 flex items-center">
+                  <Check className="text-primary w-4 h-4 mr-2" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <DialogFooter className="w-full">
+             
+              <Button
+                disabled={loading}
+                onClick={() => plan.stripePriceId && onSubscribe(plan)}
+                size="lg"
+                variant="premium"
+                className="w-full"
               >
-                <div className="flex items-center gap-x-4 mb-2">
-                  <div className="font-semibold text-lg">{plan.title}</div>
-                  <div className="text-xl font-bold">{plan.price}</div>
-                </div>
-                <ul className="text-sm mb-4">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="text-zinc-700 mb-1 flex items-center">
-                      <Check className="text-primary w-4 h-4 mr-2" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <DialogFooter className="w-full">
-                 
-                    <Button
-                      disabled={loading}
-                      onClick={() => plan.stripePriceId && onSubscribe(plan)}
-                      size="lg"
-                      variant="premium"
-                      className="w-full"
-                    >
-                      Upgrade 
-                      <Zap className="w-4 h-4 ml-2 fill-white" />
-                    </Button>
-                 
-                </DialogFooter>
-              </Card>
-            ))}
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+                {index === 0 ? "Free Tier": "Upgrade"}
+                <Zap className="w-4 h-4 ml-2 fill-white" />
+              </Button>
+            
+          </DialogFooter>
+          </Card>
+        ))}
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+
   );
 };
