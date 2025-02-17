@@ -57,7 +57,12 @@ const SettingsClient = ({ isPro, apiLimitCount, user,limit }: SettingsClientProp
   const onManageSubscription = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/stripe/manage");
+      const response = await axios.post("/api/stripe", {
+        plan: {
+          stripePriceId: process.env.NEXT_PUBLIC_PREMIUM // or whatever plan they're currently on
+        }
+      });
+
       window.location.href = response.data.url;
     } catch (error) {
       toast.error("Something went wrong");
