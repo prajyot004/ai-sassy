@@ -67,6 +67,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+
 const Pricing = () => {
   const router = useRouter();  // Move useRouter inside the component
 
@@ -111,31 +112,30 @@ const Pricing = () => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className="bg-gray-800 rounded-lg shadow-lg px-[4em] py-[64px] w-full max-w-sm mx-auto pricing-plan-wrapper"
+            className="bg-gray-800 rounded-lg shadow-lg px-[4em] py-[64px] w-full max-w-sm mx-auto pricing-plan-wrapper relative flex flex-col h-[600px]"
           >
-            <div className="pricing-plan-content text-center">
-              <h3 className="text-xl font-medium text-white mb-4">{plan.title}</h3>
-              <p className="text-3xl md:text-4xl text-white font-bold mb-2">{plan.price}</p>
-              <span className="text-white text-sm mb-6 block">{plan.frequency}</span>
-              <ul className="text-left mb-6 space-y-2">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="text-white text-lg">{feature}</li>
-                ))}
-              </ul>
-              <div className="w-80 h-10 absolute bottom-5 left-1/2 transform -translate-x-1/2">
+            <div className="pricing-plan-content text-center flex flex-col flex-1">
+              <div>
+                <h3 className="text-xl font-medium text-white mb-4">{plan.title}</h3>
+                <p className="text-3xl md:text-4xl text-white font-bold mb-2">{plan.price}</p>
+                <span className="text-white text-sm mb-6 block">{plan.frequency}</span>
+                <ul className="text-left space-y-2">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="text-white text-lg">{feature}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-auto">
                 <Button
-                  className="w-60 md:w-full my-2"
+                  className="w-full"
                   variant="premium"
                   onClick={() => handleSubscribe(plan)}
                 >
                   {index === 0 ? 'Get Started' : 'Upgrade'}
                   <Zap className="w-4 h-4 ml-2 fill-white" />
                 </Button>
-              
               </div>
-              
             </div>
-           
           </motion.div>
         ))}
       </motion.div>
