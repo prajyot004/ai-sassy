@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 interface EmailHistoryEntry {
   id: string;
@@ -37,6 +38,18 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
     } catch (error) {
       console.error("Delete error:", error);
       toast.error("Failed to delete email");
+    }
+  };
+
+  const handleClearAll = async () => {
+    try {
+      await axios.delete('/api/email-history');
+      setEmails([]);
+      toast.success("All emails cleared successfully");
+      router.refresh();
+    } catch (error) {
+      console.error("Clear all error:", error);
+      toast.error("Failed to clear emails");
     }
   };
 
@@ -73,6 +86,30 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
         </p>
       </div>
       <div className="px-4 lg:px-8 mt-4">
+        <div className="flex justify-end mb-4">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" className="w-auto">
+                <Trash2 className="h-4 w-4 mr-2" />
+                Clear All History
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Clear All Email History</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete all your email history.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleClearAll} className="bg-red-600 hover:bg-red-700">
+                  Clear All
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
         {emails.map((email) => (
           <Card key={email.id} className="p-4 my-2">
             <div className="flex justify-between items-start">
