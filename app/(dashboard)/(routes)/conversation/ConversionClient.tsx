@@ -11,7 +11,8 @@ import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Empty } from "@/components/empty";
-import { useProModal } from "@/hooks/use-pro-model";
+import { useProModal } from '@/hooks/use-pro-modal';
+
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
@@ -35,7 +36,7 @@ interface ConversionPageProps {
 }
 
 const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
-  const proModal = useProModal();
+  const modal = useProModal();
   const router = useRouter();
 
   const getURLParams = useCallback(() => {
@@ -81,6 +82,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
 
     try {
       await delay(2000);
+      console.log("inside conversationPage onsubmit");
 
       const response = await axios.post("/api/conversation", {
         messages: [
@@ -93,7 +95,23 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
           length: values.length,
         }
       });
-   
+
+      console.log("API Response:", response);
+
+      if (response.status == 200 && response.statusText == "API LIMIT EXCEDDED") {
+        console.log(response.data);
+        console.log("Attempting to open proModal");
+        modal.onOpen();
+        console.log("proModal should now be open");
+        return;
+      }
+
+      if (response.status === 403) {
+        console.log("API limit exceeded");
+        toast.error("You have reached your API limit. Please upgrade your plan.");
+        return;
+      }
+
       if (response.data.choices[0]?.message?.content && userSubscription !== null) {
         const reduceCountResponse = await axios.post("/api/reduce");
 
@@ -110,15 +128,16 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       console.error("Error occurred:", error); 
 
       if (error?.response?.status === 403) {
-        proModal.onOpen();
+        modal.onOpen();
       } else {
+        console.log("in else "+JSON.stringify(error))
         toast.error("Something went wrong :(", error);
       }
     } finally {
       setIsLoading(false);
       router.refresh();
     }
-  }, [userSubscription, proModal, router]);
+  }, [userSubscription, modal, router]);
 
   useEffect(() => {
     const savedFormData = sessionStorage.getItem('formData');

@@ -61,7 +61,7 @@ export const LandingNavbar = () => {
                 className="mr-3 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2"
                 disabled={isLoading}
               >
-                {isSignedIn ? "Member Area" : "Get started"}
+                {isSignedIn ? "DashBoard" : "Get started"}
               </Button>
             </Link>
             <button

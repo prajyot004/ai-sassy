@@ -58,18 +58,18 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
     }
   }, [reset]);
 
-  const inputClasses = "border-gray-600 bg-gray-800 rounded-md shadow-md text-white py-2 md:py-1 px-2 md:px-2 text-base md:text-lg w-full focus:ring-2 focus:ring-purple-500 focus:border-transparent";
-  const selectClasses = "border-gray-600 bg-gray-800 rounded-md shadow-md text-white py-2 md:py-3 px-3 md:px-4 text-base md:text-lg w-full focus:ring-2 focus:ring-purple-500 focus:border-transparent";
+  const inputClasses = "border-gray-600 bg-gray-800 rounded-md shadow-md text-white py-2 md:py-2 lg:py-3 px-2 md:px-3 lg:px-4 text-base md:text-lg w-full focus:ring-2 focus:ring-purple-500 focus:border-transparent";
+  const selectClasses = "border-gray-600 bg-gray-800 rounded-md shadow-md text-white py-2 md:py-4 lg:py-5 px-3 md:px-4 lg:px-5 text-base md:text-lg w-full focus:ring-2 focus:ring-purple-500 focus:border-transparent";
 
   return (
     <>
       {isLoading && <LoadingOverlay message="Preparing your email generation..." />}
-      <div className={`relative ${className} h-auto md:h-[700px] lg:h-[800px]`}>
+      <div className={`relative ${className} h-auto md:h-[800px] lg:h-[900px] xl:h-[1000px]`}>
         {/* Outer gradient border */}
         <div className="absolute -inset-[1px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg blur-[1px] opacity-75" />
         
         <FormProvider {...formMethods}>
-          <div className="w-full h-full max-w-7xl mx-auto p-4 md:p-10 bg-black text-white rounded-lg relative">
+          <div className="w-full h-full max-w-7xl mx-auto p-4 md:p-12 lg:p-16 bg-black text-white rounded-lg relative">
             {/* Inner gradient border */}
             <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 opacity-20" />
             
@@ -134,7 +134,7 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
                           <textarea
                             {...field}
                             placeholder="Email Content"
-                            className={`${inputClasses} h-32 md:h-[300px] lg:h-[250px] resize-none`}
+                            className={`${inputClasses} h-32 md:h-[400px] lg:h-[350px] xl:h-[400px] resize-none`}
                           />
                         )}
                       />
