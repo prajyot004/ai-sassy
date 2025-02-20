@@ -57,7 +57,7 @@ export const LandingHero = () => {
          {/* Right Content */}
          <div className="flex flex-col items-center justify-center flex-1 mt-10 md:mt-0 md:pl-10">
           <div className="text-2xl font-bold text-white mb-4 text-center">Next-Gen AI Email Generator</div>
-          <MiniForm className="w-full max-w-md md:max-w-2xl" />
+          <MiniForm className="w-full md:max-w-4xl" />
         </div>
       </div>
     </div>
