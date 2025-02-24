@@ -289,7 +289,35 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
               <div className="whitespace-pre-line text-black text-lg">{emailContent}</div>
             </div>
           ) : (
-            <Empty label="No email generated yet." />
+            <div className="mt-7 p-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border-2 border-dashed border-purple-200">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="p-4 bg-white rounded-full shadow-md">
+                  <Mail className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800">Ready to Generate Your Email</h3>
+                <p className="text-gray-600 max-w-md">
+                  Fill in the form above to generate a professional email. Our AI will help you craft the perfect message based on your inputs.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 w-full max-w-2xl">
+                  <div className="bg-white p-4 rounded-xl shadow-sm">
+                    <h4 className="font-semibold text-purple-600 mb-2">Tips for Best Results:</h4>
+                    <ul className="text-sm text-left text-gray-600 space-y-2">
+                      <li>• Be specific with your message content</li>
+                      <li>• Choose the appropriate tone for your audience</li>
+                      <li>• Select a length that fits your message</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl shadow-sm">
+                    <h4 className="font-semibold text-purple-600 mb-2">Available Tones:</h4>
+                    <ul className="text-sm text-left text-gray-600 space-y-2">
+                      <li>• Formal - For official communications</li>
+                      <li>• Professional - For business contexts</li>
+                      <li>• Casual - For informal messages</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
