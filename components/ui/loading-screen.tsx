@@ -16,12 +16,14 @@ export const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
       isLoading ? "opacity-100" : "opacity-0 pointer-events-none"
     )}>
       <div className="text-center">
-        <div className="relative w-12 h-12 md:w-16 md:h-16 mx-auto mb-4">
+        <div className="relative w-96 h-96 md:w-16 md:h-16 mx-auto mb-4">
           <Image
-            src="/logo.png"
+            src="/ultimail logo.png"
             alt="Logo"
             fill
-            className="animate-pulse object-contain"
+            className=" animate-pulse object-contain"
+              // width={520}
+              // height={500}
           />
         </div>
         <h2 className="text-white text-lg md:text-xl font-semibold mb-6">

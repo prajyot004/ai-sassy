@@ -65,8 +65,8 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
     <>
       {isLoading && <LoadingOverlay message="Preparing your email generation..." />}
       <div className={`relative ${className} h-auto md:h-[800px] lg:h-[900px] xl:h-[1000px] w-full md:w-[80%] lg:w-[70%] xl:w-[60%]`}>
-        {/* Outer gradient border */}
-        <div className="absolute -inset-[1px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg blur-[1px] opacity-75" />
+        {/* Rainbow Border */}
+        <div className="absolute -inset-[4px] rounded-lg bg-[conic-gradient(from_180deg_at_50%_50%,#ff0000_0deg,#ff7f00_60deg,#ffff00_120deg,#00ff00_180deg,#0000ff_240deg,#4b0082_300deg,#8b00ff_360deg)] blur-[2px] opacity-90" />
         
         <FormProvider {...formMethods}>
           <div className="w-full h-full max-w-7xl mx-auto p-4 md:p-12 lg:p-16 bg-black text-white rounded-lg relative">

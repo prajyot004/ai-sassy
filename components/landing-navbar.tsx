@@ -42,15 +42,15 @@ export const LandingNavbar = () => {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a href="#startPage" className="flex items-center space-x-3">
             <Image
-              src="/logo.png"
-              className="h-8"
+              src="/ultimail logo.png"
               alt="Flowbite Logo"
-              width={32}
-              height={32}
+              className=" h-20"
+              width={120}
+              height={100}
             />
-            <span className="self-center text-xl md:text-2xl font-semibold text-white">
+            {/* <span className="self-center text-xl md:text-2xl font-semibold text-white">
               ultimail.ai
-            </span>
+            </span> */}
           </a>
 
           {/* Mobile menu button */}
@@ -61,7 +61,7 @@ export const LandingNavbar = () => {
                 className="mr-3 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2"
                 disabled={isLoading}
               >
-                {isSignedIn ? "DashBoard" : "Get started"}
+                {isSignedIn ? "Dashboard" : "Get started"}
               </Button>
             </Link>
             <button
@@ -134,7 +134,7 @@ export const LandingNavbar = () => {
                     className="w-full text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full px-4 py-2"
                     disabled={isLoading}
                   >
-                    {isSignedIn ? "Member Area" : "Get started"}
+                    {isSignedIn ? "Dashboard" : "Get started"}
                   </Button>
                 </Link>
               </li>

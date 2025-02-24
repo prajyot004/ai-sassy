@@ -169,7 +169,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
   return (
     <div>
       {isLoading && <LoadingOverlay message="Generating your email..." />}
-      <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#1E293B]">
+      <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#000000]">
         <div className="w-full max-w-6xl bg-white rounded-3xl p-10 space-y-8 relative border-4 border-transparent bg-clip-border gradient-border">
           <Heading
             title="Email Generator"

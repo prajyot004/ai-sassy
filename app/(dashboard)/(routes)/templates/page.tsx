@@ -120,7 +120,7 @@ const TemplatesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black flex flex-col items-center py-12 px-4">
+    <div className="min-h-screen bg-[#000000] flex flex-col items-center py-12 px-4">
       {/* Header Section */}
       <div className="text-center mb-12">
         <h1 className="text-5xl font-extrabold text-white mb-4">
@@ -138,18 +138,25 @@ const TemplatesPage = () => {
             {expandedTemplate === template.title && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="fixed inset-0 bg-black/50" onClick={() => setExpandedTemplate(null)} />
-                <div className="relative bg-[#111827] border-4 border-[#BD52C2] shadow-lg rounded-3xl p-4 sm:p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+                <div className="relative bg-[#111827] border-4 border-[#BD52C2] shadow-lg rounded-3xl p-6 sm:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <button 
                     onClick={() => setExpandedTemplate(null)} 
-                    className="absolute top-2 right-2 text-white hover:text-gray-300"
+                    className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
-                  <div className="mt-4">
-                    <h3 className="text-xl font-semibold text-white mb-4">{template.title}</h3>
-                    <pre className="whitespace-pre-wrap text-white text-sm sm:text-base break-words">{template.content}</pre>
+                  <div className="mt-2">
+                    <div className="flex items-center space-x-3 mb-6">
+                      <div className={`p-2 rounded-full ${template.bgColor}`}>
+                        <template.icon className={`w-6 h-6 ${template.color}`} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white">{template.title}</h3>
+                    </div>
+                    <div className="bg-[#1E293B] rounded-xl p-6">
+                      <pre className="whitespace-pre-wrap text-gray-200 text-base font-mono leading-relaxed">{template.content}</pre>
+                    </div>
                   </div>
                 </div>
               </div>
