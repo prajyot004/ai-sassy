@@ -21,7 +21,7 @@ const formSchema = z.object({
   sender: z.string().nonempty("Sender is required"),
   receiver: z.string().nonempty("Receiver is required"),
   content: z.string().nonempty("Content is required"),
-  tone: z.enum(["Formal", "Informal", "Professional", "Casual"], {
+  tone: z.enum(["Formal", "Informal", "Professional", "Casual" ,"Inspirational"], {
     errorMap: () => ({ message: "Tone is required" }),
   }),
   length: z.enum(["Short", "Medium", "Long"], {
@@ -44,7 +44,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       const params = new URLSearchParams(window.location.search);
       return {
         content: params.get('content') || '',
-        tone: params.get('tone') as "Formal" | "Informal" | "Professional" | "Casual" || "Formal",
+        tone: params.get('tone') as "Formal" | "Informal" | "Professional" | "Casual" | "Inspirational" || "Formal",
         length: params.get('length') as "Short" | "Medium" | "Long" || "Short"
       };
     }
