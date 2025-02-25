@@ -101,6 +101,7 @@ const Pricing = () => {
 
   return (
     <div id="pricing" className="relative py-[4rem] scroll-m-[220px] bg-black flex flex-col items-center px-4">
+      <div className="w-full h-px bg-white my-8"></div>
       <h2 className="text-3xl md:text-5xl font-semibold text-white mb-8 md:mb-12 text-center">Pricing Made Simple</h2>
       <motion.div
         className="flex flex-col md:flex-row justify-center gap-8 md:gap-12 w-full max-w-7xl"

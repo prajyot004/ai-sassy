@@ -27,7 +27,7 @@ const pricingPlans = [
     count: 100,
     stripePriceId: process.env.NEXT_PUBLIC_PREMIUM, // Replace with your actual Stripe Price ID for the Premium plan
     features: [
-      '100 Emails per monthsss',
+      '100 Emails per months',
       '50 GB Storage',
       'Priority Email Support',
       'Enhanced File Sharing',

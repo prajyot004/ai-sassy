@@ -18,7 +18,7 @@ export const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
       <div className="text-center">
         <div className="relative w-96 h-96 md:w-16 md:h-16 mx-auto mb-4">
           <Image
-            src="/ultimail logo.png"
+            src="/ultimail_logo.png"
             alt="Logo"
             fill
             className=" animate-pulse object-contain"

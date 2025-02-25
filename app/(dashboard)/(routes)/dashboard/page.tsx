@@ -50,7 +50,7 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#000000] flex flex-col items-center py-12 px-4">
+    <div className="min-h-screen bg-[#1E293B] flex flex-col items-center py-12 px-4">
       {isLoading && <LoadingOverlay message="Loading dashboard..." />}
       {/* Hero Section */}
       <div className="text-center mb-12">

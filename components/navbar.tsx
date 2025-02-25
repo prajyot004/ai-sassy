@@ -22,7 +22,7 @@ const Navbar = async () => {
     });
 
     return (
-        <div className="flex items-center p-4" style={{ backgroundColor: "black" }}>
+        <div className="flex items-center p-4" style={{ backgroundColor: "#1E293B" }}>
             <MobileSidebar userId={UserApiLimit} isPro={isPro} apiLimitCount={apiLimitCount} />
             <div className="flex w-full justify-end gap-x-4">
                 

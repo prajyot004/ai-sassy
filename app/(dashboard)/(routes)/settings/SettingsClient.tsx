@@ -75,7 +75,7 @@ const SettingsClient = ({ isPro, apiLimitCount, user,limit }: SettingsClientProp
     <div>
       <ProModal />
       {(isLoading || loading) && <LoadingOverlay message="Updating settings..." />}
-      <div className="container mx-auto py-8 px-4 max-w-7xl space-y-8 bg-[#000000]">
+      <div className="container mx-auto py-8 px-4 max-w-7xl space-y-8 bg-[#1E293B]">
         <div className="text-center mb-12">
           <Heading
             title="Settings"

@@ -41,7 +41,7 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
       setIsLoading(true);
       const formData = getValues();
       sessionStorage.setItem('formData', JSON.stringify(formData));
-      
+
       // Redirect to conversation page
       await router.push(`/conversation?content=${encodeURIComponent(formData.content)}&tone=${encodeURIComponent(formData.tone)}&length=${encodeURIComponent(formData.length)}`);
 
@@ -62,17 +62,15 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
   const selectClasses = "border-gray-600 bg-gray-800 rounded-md shadow-md text-white py-2 md:py-4 lg:py-5 px-3 md:px-4 lg:px-5 text-base md:text-lg w-full focus:ring-2 focus:ring-purple-500 focus:border-transparent";
 
   return (
-    <>
+    <div className={`gradient-border-wrapper ${className}`}>
       {isLoading && <LoadingOverlay message="Preparing your email generation..." />}
-      <div className={`relative ${className} h-auto md:h-[800px] lg:h-[900px] xl:h-[1000px] w-full md:w-[80%] lg:w-[70%] xl:w-[60%]`}>
-        {/* Rainbow Border */}
-        <div className="absolute -inset-[4px] rounded-lg bg-[conic-gradient(from_180deg_at_50%_50%,#ff0000_0deg,#ff7f00_60deg,#ffff00_120deg,#00ff00_180deg,#0000ff_240deg,#4b0082_300deg,#8b00ff_360deg)] blur-[2px] opacity-90" />
-        
+      <div className={`relative ${className} h-auto md:h-[800px] lg:h-[900px] xl:h-[1000px] w-full md:w-[80%] lg:w-[70%] xl:w-[60%]`}>        
+
         <FormProvider {...formMethods}>
           <div className="w-full h-full max-w-7xl mx-auto p-4 md:p-12 lg:p-16 bg-black text-white rounded-lg relative">
             {/* Inner gradient border */}
             <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 opacity-20" />
-            
+
             <form className="space-y-4 md:space-y-8 w-full h-full relative flex flex-col">
               {/* Email Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -161,6 +159,7 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
                               <option value="Informal">Informal</option>
                               <option value="Professional">Professional</option>
                               <option value="Casual">Casual</option>
+                              <option value="Inspirational">Inspirational</option>
                             </select>
                           )}
                         />
@@ -212,7 +211,7 @@ const MiniForm: React.FC<MiniFormProps> = ({ className }) => {
           </div>
         </FormProvider>
       </div>
-    </>
+    </div>
   );
 };
 

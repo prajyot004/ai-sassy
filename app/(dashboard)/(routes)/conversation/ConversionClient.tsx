@@ -96,19 +96,11 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
         }
       });
 
-      console.log("API Response:", response);
+      console.log("API Response:", response.data);
 
-      if (response.status == 200 && response.statusText == "API LIMIT EXCEDDED") {
-        console.log(response.data);
-        console.log("Attempting to open proModal");
+      if (response.data.error === "API_LIMIT_EXCEEDED") {
+        console.log("API limit exceeded, opening pro modal");
         modal.onOpen();
-        console.log("proModal should now be open");
-        return;
-      }
-
-      if (response.status === 403) {
-        console.log("API limit exceeded");
-        toast.error("You have reached your API limit. Please upgrade your plan.");
         return;
       }
 
@@ -125,13 +117,13 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
       const generatedContent = response.data.choices[0]?.message?.content || "No content received from API";
       setEmailContent(generatedContent);
     } catch (error: any) {
-      console.error("Error occurred:", error); 
+      console.error("Error occurred:", error);
 
       if (error?.response?.status === 403) {
+        console.log("API limit exceeded (403), opening pro modal");
         modal.onOpen();
       } else {
-        console.log("in else "+JSON.stringify(error))
-        toast.error("Something went wrong :(", error);
+        toast.error(error?.response?.data?.message || "Something went wrong. Please try again.");
       }
     } finally {
       setIsLoading(false);
@@ -169,7 +161,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
   return (
     <div>
       {isLoading && <LoadingOverlay message="Generating your email..." />}
-      <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#000000]">
+      <div className="min-h-screen flex flex-col justify-center items-center p-8 bg-[#1E293B]">
         <div className="w-full max-w-6xl bg-white rounded-3xl p-10 space-y-8 relative border-4 border-transparent bg-clip-border gradient-border">
           <Heading
             title="Email Generator"
@@ -245,6 +237,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
                         <option value="Informal">Informal</option>
                         <option value="Professional">Professional</option>
                         <option value="Casual">Casual</option>
+                        <option value="Inspirational">Inspirational</option>
                       </select>
                     </FormControl>
                   </FormItem>

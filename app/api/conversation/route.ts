@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { auth , currentUser} from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import prismadb from "@/lib/prismadb";
@@ -13,12 +13,12 @@ const openai = new OpenAI({
 
 export async function POST(req: Request) {
   try {
-
-    console.log("inside /api/conversation endpoint: "+JSON.stringify(req.json))
     const { userId } = auth();
     const body = await req.json();
     const { messages, formData } = body;
     const user = await currentUser();
+
+    console.log("inside /api/conversation endpoint:", { userId, messages, formData });
 
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -38,27 +38,25 @@ export async function POST(req: Request) {
       );
     }
 
-    const freeTrial = await checkApiLimit();
+    // First check if user has a valid subscription
     const isPro = await checkSubscription();
+    console.log("Subscription status:", { isPro });
 
-    if (!freeTrial && !isPro) {
-      return NextResponse.json(
-        {
-          error:
-            "You have reached the maximum limit of requests. Please buy another plan or renew your current plan.",
-        },
-        { status: 200 }
-      );
+    // Only check API limit if user is not a pro subscriber
+    if (!isPro) {
+      const freeTrial = await checkApiLimit();
+      console.log("Free trial status:", { freeTrial });
+
+      if (!freeTrial) {
+        return NextResponse.json(
+          {
+            error: "API_LIMIT_EXCEEDED",
+            message: "You have reached the maximum limit of requests. Please upgrade to continue."
+          },
+          { status: 403 }
+        );
+      }
     }
-
-    // if (!isPro) {
-    //   await increaseApiLimit();
-    //   console.log("increaseLimit");
-    // }
-
-    // if (!userId || !user) {
-    //   return new NextResponse("Unauthorized", { status: 401 });
-    // }
 
     // Fetch the current API limit count for the user
     const userLimit = await prismadb.userApiLimit.findUnique({
@@ -69,8 +67,13 @@ export async function POST(req: Request) {
 
     // Check if the count exists and is greater than 0
     if (!userLimit || userLimit.count <= 0) {
-      console.log("User has reacher limit "+userId);
-      return new NextResponse("You have reached the maximum limit of requests. Please buy another plan or renew your current plan.", { status: 200 , statusText: "API LIMIT EXCEDDED "});
+      console.log("User has reached limit:", userId);
+      return NextResponse.json({
+        error: "API_LIMIT_EXCEEDED",
+        message: "You have reached the maximum limit of requests. Please upgrade to continue."
+      }, { 
+        status: 403 
+      });
     }
 
     // Simplicity instructions
@@ -95,7 +98,7 @@ export async function POST(req: Request) {
     const allMessages = [...instructions, ...messages];
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-3.5-turbo",
       messages: allMessages,
     });
 
