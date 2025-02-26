@@ -32,15 +32,15 @@ interface SettingsClientProps {
     }>;
     imageUrl: string;
   } | null;
-  limit:number;
+  limit: number;
 }
 
-const SettingsClient = ({ isPro, apiLimitCount, user,limit }: SettingsClientProps) => {
+const SettingsClient = ({ isPro, apiLimitCount, user, limit }: SettingsClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const proModal = useProModal();
-  
+
 
   const onSubscribe = async () => {
     try {
@@ -77,15 +77,28 @@ const SettingsClient = ({ isPro, apiLimitCount, user,limit }: SettingsClientProp
       {(isLoading || loading) && <LoadingOverlay message="Updating settings..." />}
       <div className="container mx-auto py-8 px-4 max-w-7xl space-y-8 bg-[#1E293B]">
         <div className="text-center mb-12">
-          <Heading
+          {/* <Heading
             title="Settings"
             description="Manage account settings and preferences"
             icon={Settings}
             iconColor="text-white"
             bgColor="bg-gray-700/10"
-            titleClass="text-5xl font-extrabold text-white mb-4"
-            descriptionClass="text-lg text-gray-400"
-          />
+            titleClass="text-5xl font-extrabold text-white mb-4 flex justify-center"
+            descriptionClass="text-lg text-gray-400 flex justify-center"
+          /> */}
+          <div className="px-4 lg:px-8 flex items-center gap-x-3 mb-8 justify-center">
+            <div className={"bg-p-2 w-fit rounded-md"}>
+              <Settings className="w-10 h-10 text-white" />
+            </div>
+            <div>
+              <h2 className="text-5xl font-extrabold text-white mb-4 flex justify-center"> {/* Apply titleClass here */}
+                Settings
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Manage your account settings and preferences
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -160,9 +173,9 @@ const SettingsClient = ({ isPro, apiLimitCount, user,limit }: SettingsClientProp
 
               <div>
                 {!isPro ? (
-                  <Button 
-                    onClick={proModal.onOpen} 
-                    className="w-full mb-4" 
+                  <Button
+                    onClick={proModal.onOpen}
+                    className="w-full mb-4"
                     variant="premium"
                   >
                     Upgrade to Pro

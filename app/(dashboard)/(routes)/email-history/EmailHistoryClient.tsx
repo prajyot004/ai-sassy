@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Heading } from "@/components/heading";
-import { Mail, Trash2 } from "lucide-react";
+import { Mail, Trash2, Loader2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -27,10 +27,12 @@ interface EmailHistoryClientProps {
 
 export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) => {
   const [emails, setEmails] = useState<EmailHistoryEntry[]>(initialEmails);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const router = useRouter();
 
   const handleDelete = async (id: string) => {
     try {
+      setDeletingId(id);
       await axios.delete(`/api/email-history/${id}`);
       setEmails(emails.filter(email => email.id !== id));
       toast.success("Email deleted successfully");
@@ -38,6 +40,8 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
     } catch (error) {
       console.error("Delete error:", error);
       toast.error("Failed to delete email");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -128,8 +132,13 @@ export const EmailHistoryClient = ({ initialEmails }: EmailHistoryClientProps) =
                 size="icon"
                 onClick={() => handleDelete(email.id)}
                 className="text-red-500 hover:text-red-600 hover:bg-red-100/10"
+                disabled={deletingId === email.id}
               >
-                <Trash2 className="h-5 w-5" />
+                {deletingId === email.id ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Trash2 className="h-5 w-5" />
+                )}
               </Button>
             </div>
           </Card>

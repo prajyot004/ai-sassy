@@ -169,7 +169,7 @@ const ConversationPage = ({ userSubscription }: ConversionPageProps) => {
             icon={Mail}
             iconColor="text-purple-600"
             bgColor="bg-white"
-            titleClass="text-black"
+            titleClass="text-black flex justify-start"
           />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

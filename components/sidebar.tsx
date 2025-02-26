@@ -62,11 +62,13 @@ const Sidebar = ({
     return (
         <div className="space-y-4 py-4 flex flex-col h-full bg-[#1E293B] border-r-[1px] text-white">
             <div className="px-3 py-2 flex-1">
-                <Link href="/dashboard" className="flex items-center justify-between pl-3 mb-14">
-                    <div className="relative w-36 h-28 mr-4">
-                        <Image fill alt="Logo" src="/ultimail_logo.png" />
-                    </div>
-                </Link>
+                <div className=" flex items-center justify-center mb-8">
+                    <Link href="/dashboard">
+                        <div className="relative w-36 h-28">
+                            <Image fill alt="Logo" src="/ultimail_logo.png" />
+                        </div>
+                    </Link>
+                </div>
                 <div className="space-y-1">
                     {routes.map((route) => (
                         <Link
