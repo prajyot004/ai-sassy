@@ -23,11 +23,23 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session;
 
   const planLimits: { [key: string]: number } = {
-    'price_1Qly9mK1ShPPkgJQt7iEF2gU': 100,  // Pro plan
-    'price_1QlyAnK1ShPPkgJQsF7GQKZO': 300   // Premium plan
+    [process.env.NEXT_PUBLIC_PREMIUM]: 100,  // Pro plan
+    [process.env.NEXT_PUBLIC_ULTIMATE]: 300   // Premium plan
   };
 
+  console.log("Plan limits:", planLimits);
+
   switch (event.type) {
+
+    case "billing_portal.session.created":{
+      console.log(" inside billing portal session created event");
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription as string
+      );
+
+      console.log("Subscription:", JSON.stringify(subscription, null, 2));
+    }
+
     case "invoice.payment_succeeded": {
       const subscription = await stripe.subscriptions.retrieve(
         session.subscription as string
@@ -128,6 +140,7 @@ export async function POST(req: Request) {
     }
 
     case "customer.subscription.deleted": {
+      console.log("inside delete subsription :"+ JSON.stringify(event.data.object));
       const subscription = event.data.object as Stripe.Subscription;
 
       const { userId } = subscription.metadata;
